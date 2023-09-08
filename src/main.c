@@ -52,6 +52,7 @@ int main(int argc, char* argv[])
         .y = (window_size.y - 2 * RADIUS) / SIZE
     };
     sfEvent event;
+    uint32_t gen_i = 0;
     while (sfRenderWindow_isOpen(window)) {
         while (sfRenderWindow_pollEvent(window, &event)) {
             if (event.type == sfEvtClosed)
