@@ -4,21 +4,30 @@
 
 #define C_COLOR sfRed
 
+typedef struct {
+    my_nn_t brain;
+    my_matrix_t atb;
+} my_cell_t;
+
+#define CELL_DECLA(nvar) my_cell_t nvar = { \
+        .brain = {.size = 0, .name = "brain"}, \
+        .atb = {.m = 0, .n = 0, .name = "atb"} };
+
 
 int main(int argc, char* argv[])
 {
     srand(69);
 
     CELL_DECLA(cell);
-    cell.x = 0;
-    cell.y = 0;
-    cell.angle = 0;
-    uint32_t dim[] = {3, 3, 3};
-    cell.brain.dims = dim;
-    cell.brain.size = sizeof(dim) / sizeof(dim[0]);
-    my_nn_create(&(cell.brain));
-    my_nn_print(&(cell.brain));
-    my_nn_free(&(cell.brain));
+    cell.brain.size = 3;
+    uint32_t dims[] = {3, 3, 3};
+    cell.brain.dims = dims;
+    my_matrix_create(1, 3, 1, &cell.atb);
+    my_nn_create(&cell.brain);
+    my_nn_print(&cell.brain);
+    MAT_PRINT(cell.atb);
+
+#if 0
 
     sfVideoMode mode = {1500, 1500, 32};
     sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo", sfDefaultStyle, NULL);
@@ -32,12 +41,12 @@ int main(int argc, char* argv[])
         sfRenderWindow_clear(window, sfBlack);
         sfCircleShape *pt =sfCircleShape_create();
         sfVector2f pos = {
-            .x = cell.x + window_size.x / 2,
-            .y = cell.y + window_size.y / 2
+            .x = cell.atrbt.arr[0][0] + window_size.x / 2,
+            .y = cell.atrbt.arr[0][1] + window_size.y / 2
         };
         sfVertex line[] = {
             {{pos.x  + RADIUS, pos.y  + RADIUS}, C_COLOR, {0, 0}},
-            {{pos.x + 100. * cos(cell.angle) + RADIUS, pos.y + 100. * sin(cell.angle) + RADIUS}, C_COLOR, {0, 0}}
+            {{pos.x + 100. * cos(cell.atrbt.arr[0][2]) + RADIUS, pos.y + 100. * sin(cell.atrbt.arr[0][2]) + RADIUS}, C_COLOR, {0, 0}}
         };
         sfRenderWindow_drawPrimitives(window, line, 2, sfLines, NULL);
         sfCircleShape_setFillColor(pt, C_COLOR);
@@ -47,6 +56,7 @@ int main(int argc, char* argv[])
         sfRenderWindow_display(window);
     }
     sfRenderWindow_destroy(window);
+#endif
 
     return 0;
 }
