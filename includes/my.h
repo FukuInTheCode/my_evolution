@@ -2,6 +2,12 @@
 #define MYH
 
 #include <stdio.h>
-#include "./test.h"
+#include <time.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <stdint.h>
+#include <string.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include "my_evo.h"
 
-void hello(void);
