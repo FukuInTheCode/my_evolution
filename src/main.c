@@ -121,8 +121,10 @@ int main(int argc, char* argv[])
             if (tick == max_tick + 1) {
                 bool is_selected = false;
                 for (uint32_t j = 0; j < pop_size / 2; ++j) {
-                    if (selected_id[j] == i)
+                    if (selected_id[j] == i) {
                         is_selected == true;
+                        break;
+                    }
                 }
                 if (!is_selected)
                     continue;
