@@ -4,6 +4,11 @@
 
 #define C_COLOR sfRed
 
+double set(double x)
+{
+    return (double)((int)x);
+}
+
 
 int main(int argc, char* argv[])
 {
@@ -17,14 +22,19 @@ int main(int argc, char* argv[])
     cell.brain.acti_type = base_type;
     cell.brain.funcs.af = my_nn_sin;
     cell.brain.funcs.grad_af = my_nn_sin_grad;
-    my_matrix_create(1, 3, 1, &cell.atb);
+    my_matrix_create(3, 1, 1, &cell.atb);
     my_nn_print(&cell.brain);
     MAT_PRINT(cell.atb);
 
     sfVideoMode mode = {1500, 1500, 32};
     sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo", sfDefaultStyle, NULL);
-    sfEvent event;
+
     sfVector2u window_size = sfRenderWindow_getSize(window);
+    sfVector2f ratio = {
+        .x = window_size.x / 128,
+        .y = window_size.y / 128
+    };
+    sfEvent event;
     while (sfRenderWindow_isOpen(window)) {
         while (sfRenderWindow_pollEvent(window, &event)) {
             if (event.type == sfEvtClosed)
@@ -32,17 +42,24 @@ int main(int argc, char* argv[])
         }
 
         MAT_DECLA(datb);
-        my_nn_pre
+        my_nn_predict(&(cell.brain), &(cell.atb), &datb);
+        MAT_DECLA(new_atb);
+        my_matrix_add(&new_atb, 2, &(cell.atb), &(datb));
+        my_matrix_copy(&new_atb, &(cell.atb));
+        my_matrix_free(2, &datb, &new_atb);
+
+        MAT_PRINT(cell.atb);
 
         sfRenderWindow_clear(window, sfBlack);
         sfCircleShape *pt =sfCircleShape_create();
         sfVector2f pos = {
-            .x = cell.atb.arr[0][0] + window_size.x / 2,
-            .y = cell.atb.arr[0][1] + window_size.y / 2
+            .x = cell.atb.arr[0][0] * ratio.x + window_size.x / 2,
+            .y = cell.atb.arr[1][0] * ratio.y + window_size.y / 2
         };
+        printf("%lf, %lf\n", pos.x, pos.y);
         sfVertex line[] = {
             {{pos.x  + RADIUS, pos.y  + RADIUS}, C_COLOR, {0, 0}},
-            {{pos.x + 100. * cos(cell.atb.arr[0][2]) + RADIUS, pos.y + 100. * sin(cell.atb.arr[0][2]) + RADIUS}, C_COLOR, {0, 0}}
+            {{pos.x + 100. * cos(cell.atb.arr[2][0]) + RADIUS, pos.y + 100. * sin(cell.atb.arr[2][0]) + RADIUS}, C_COLOR, {0, 0}}
         };
         sfRenderWindow_drawPrimitives(window, line, 2, sfLines, NULL);
         sfCircleShape_setFillColor(pt, C_COLOR);
