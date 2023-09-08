@@ -10,7 +10,8 @@ double set(double x)
 {
     return -1. * (x < 0) + (x > 0);
 }
-
+uint32_t max_tick = SIZE * sqrt(2);
+uint32_t tick = 0;
 int main(int argc, char* argv[])
 {
     srand(69);
@@ -52,14 +53,17 @@ int main(int argc, char* argv[])
         if (sfKeyboard_isKeyPressed(sfKeyDown))
             my_matrix_set(&(cell.atb), 1, 0, cell.atb.arr[1][0] + 1);
 
-        MAT_DECLA(datb);
-        my_nn_predict(&(cell.brain), &(cell.atb), &datb);
-        datb.arr[0][0] = set(datb.arr[0][0]);
-        datb.arr[1][0] = set(datb.arr[1][0]);
-        MAT_DECLA(new_atb);
-        my_matrix_add(&new_atb, 2, &(cell.atb), &(datb));
-        my_matrix_copy(&new_atb, &(cell.atb));
-        my_matrix_free(2, &datb, &new_atb);
+        if (tick <= max_tick) {
+            MAT_DECLA(datb);
+            my_nn_predict(&(cell.brain), &(cell.atb), &datb);
+            datb.arr[0][0] = set(datb.arr[0][0]);
+            datb.arr[1][0] = set(datb.arr[1][0]);
+            MAT_DECLA(new_atb);
+            my_matrix_add(&new_atb, 2, &(cell.atb), &(datb));
+            my_matrix_copy(&new_atb, &(cell.atb));
+            my_matrix_free(2, &datb, &new_atb);
+            ++tick;
+        }
 
         if ((int)cell.atb.arr[0][0] < 0)
             my_matrix_set(&(cell.atb), 0, 0, 0);
@@ -69,7 +73,6 @@ int main(int argc, char* argv[])
             my_matrix_set(&(cell.atb), 0, 0, SIZE);
         if ((int)cell.atb.arr[1][0] > SIZE)
             my_matrix_set(&(cell.atb), 1, 0, SIZE);
-
 
         sfRenderWindow_clear(window, sfBlack);
         sfCircleShape *pt =sfCircleShape_create();
