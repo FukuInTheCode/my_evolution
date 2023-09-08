@@ -102,6 +102,7 @@ int main(int argc, char* argv[])
                 if (i < pop_size / 2) {
                     selected_id[i] = i;
                     selected_reward[i] = pop[i].reward;
+                    printf("%u, %lf\n", selected_id[i], selected_reward[i]);
                     continue;
                 }
                 for (uint32_t j = 0; j < pop_size / 2; ++j) {
@@ -110,25 +111,29 @@ int main(int argc, char* argv[])
 
                     selected_reward[j] = pop[i].reward;
                     selected_id[j] = i;
+                    break;
                 }
             }
             pop[max_reward_id].color = sfBlue;
+            for (uint32_t i = 0; i < pop_size / 2; ++i)
+                pop[selected_id[i]].color = sfGreen;
+
             ++tick;
         }
 
         sfRenderWindow_clear(window, sfBlack);
         for (uint32_t i = 0; i < pop_size; ++i) {
-            if (tick == max_tick + 1) {
-                bool is_selected = false;
-                for (uint32_t j = 0; j < pop_size / 2; ++j) {
-                    if (selected_id[j] == i) {
-                        is_selected = true;
-                        break;
-                    }
-                }
-                if (!is_selected)
-                    continue;
-            }
+            // if (tick == max_tick + 1) {
+            //     bool is_selected = false;
+            //     for (uint32_t j = 0; j < pop_size / 2; ++j) {
+            //         if (selected_id[j] == i) {
+            //             is_selected = true;
+            //             break;
+            //         }
+            //     }
+            //     if (!is_selected)
+            //         continue;
+            // }
             sfVector2f pos = {
                 .x = pop[i].atb.arr[0][0] * ratio.x,
                 .y = pop[i].atb.arr[1][0] * ratio.y
