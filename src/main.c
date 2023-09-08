@@ -116,9 +116,14 @@ int main(int argc, char* argv[])
                 selected_id[j] = i;
                 selected_reward[j] = pop[i].reward;
             }
-            pop[max_reward_id].color = sfBlue;
             for (uint32_t i = 0; i < pop_size / 2; ++i)
                 pop[selected_id[i]].color = sfGreen;
+            pop[max_reward_id].color = sfBlue;
+
+            for (uint32_t i = 0; i < SIZE / 4; ++i) {
+                printf("%u, %u\n", selected_id[i], selected_id[i + 1]);
+            }
+
 
             ++tick;
         }
