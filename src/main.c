@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     for (uint32_t i = 0; i < pop_size; ++i) {
         pop[i].brain.size = 3;
         pop[i].brain.name = "brain";
-        pop[i].dims = dims;
+        pop[i].brain.dims = dims;
         my_nn_create(&pop[i].brain);
         pop[i].brain.acti_type = base_type;
         pop[i].brain.funcs.af = my_nn_sin;
@@ -32,9 +32,9 @@ int main(int argc, char* argv[])
         pop[i].atb.m = 0;
         pop[i].atb.n = 0;
         pop[i].atb.name = "atb";
-        my_matrix_create(3, 1, 1, &cell.atb);
-        my_matrix_set(&(cell.atb), 0, 0, my_randint(0, SIZE));
-        my_matrix_set(&(cell.atb), 1, 0, my_randint(0, SIZE));
+        my_matrix_create(3, 1, 1, &pop[i].atb);
+        my_matrix_set(&(pop[i].atb), 0, 0, my_randint(0, SIZE));
+        my_matrix_set(&(pop[i].atb), 1, 0, my_randint(0, SIZE));
     }
 
     sfVideoMode mode = {1500, 1500, 32};
@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
         //     my_matrix_set(&(cell.atb), 1, 0, cell.atb.arr[1][0] + 1);
 
         if (tick <= max_tick) {
-            for (uint32_t i = 0; i < pop_size, ++j) {
+            for (uint32_t i = 0; i < pop_size; ++i) {
                 MAT_DECLA(datb);
                 my_nn_predict(&(pop[i].brain), &(pop[i].atb), &datb);
                 datb.arr[0][0] = set(datb.arr[0][0]);
