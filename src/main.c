@@ -124,8 +124,9 @@ int main(int argc, char* argv[])
                 pop[selected_id[i]].color = sfGreen;
             pop[max_reward_id].color = sfBlue;
 
+            uint32_t n_params = my_nn_get_n_params(&(pop[0].brain));
             for (uint32_t i = 0; i < pop_size / 2;  i += 2) {
-                // ...
+                uint32_t crosspoint = my_randint(0, n_params);
             }
             ++tick;
         }
