@@ -10,6 +10,7 @@ double set(double x)
 {
     return -1. * (x < 0) + (x > 0);
 }
+
 int main(int argc, char* argv[])
 {
     uint32_t max_tick = 100;
@@ -54,11 +55,18 @@ int main(int argc, char* argv[])
     };
     sfEvent event;
     uint32_t gen_i = 0;
+    bool do_sleep = false;
+    bool do_show = true;
     while (sfRenderWindow_isOpen(window)) {
         while (sfRenderWindow_pollEvent(window, &event)) {
             if (event.type == sfEvtClosed)
                 sfRenderWindow_close(window);
         }
+
+        if (sfKeyboard_isKeyPressed(sfKeyA))
+            do_sleep = !do_sleep;
+        if (sfKeyboard_isKeyPressed(sfKeyZ))
+            do_show = !do_show;
 
         if (tick < max_tick) {
             for (uint32_t i = 0; i < pop_size; ++i) {
@@ -93,7 +101,8 @@ int main(int argc, char* argv[])
             double total_reward = 0;
             for (uint32_t i = 0; i < pop_size; ++i) {
                 pop[i].reward = 1. / (sqrt(pow(pop[i].atb.arr[0][0] - SIZE / 2., 2) + pow(pop[i].atb.arr[1][0] - SIZE / 2., 2)) + 1);
-                total_reward += pop[i].reward;
+                if (do_show)
+                    total_reward += pop[i].reward;
                 if (max_reward < pop[i].reward) {
                     max_reward = pop[i].reward;
                     max_reward_id = i;
@@ -151,35 +160,42 @@ int main(int argc, char* argv[])
                 free(child2);
             }
             ++tick;
-            printf("gen %u's avr reward: %lf\n", gen_i++, total_reward / pop_size);
-            for (uint32_t i = 0; i < pop_size / 2; ++i)
-                pop[selected_id[i]].color = sfGreen;
-            for (uint32_t i = 0; i < pop_size / 2; ++i)
-                pop[unselected_id[i]].color = sfCyan;
-            pop[max_reward_id].color = sfBlue;
+            ++gen_i;
+            if (do_show) {
+                printf("gen %u's avr reward: %lf\n", gen_i, total_reward / pop_size);
+                for (uint32_t i = 0; i < pop_size / 2; ++i)
+                    pop[selected_id[i]].color = sfGreen;
+                for (uint32_t i = 0; i < pop_size / 2; ++i)
+                    pop[unselected_id[i]].color = sfCyan;
+                pop[max_reward_id].color = sfBlue;
+            }
         } else {
-            usleep(1000000);
+            if (do_sleep)
+                usleep(1000000);
             for (uint32_t i = 0; i < pop_size; ++i){
                 my_matrix_randint(0, SIZE, 1, &(pop[i].atb));
-                pop[i].color = sfRed;
+                if (do_show)
+                    pop[i].color = sfRed;
             }
-            pop[max_reward_id].color = sfBlue;
+            if (do_show)
+                pop[max_reward_id].color = sfBlue;
             tick = 0;
         }
-
-        sfRenderWindow_clear(window, sfBlack);
-        for (uint32_t i = 0; i < pop_size; ++i) {
-            sfVector2f pos = {
-                .x = pop[i].atb.arr[0][0] * ratio.x,
-                .y = pop[i].atb.arr[1][0] * ratio.y
-            };
-            sfCircleShape *pt =sfCircleShape_create();
-            sfCircleShape_setFillColor(pt, pop[i].color);
-            sfCircleShape_setPosition(pt, pos);
-            sfCircleShape_setRadius(pt, RADIUS);
-            sfRenderWindow_drawCircleShape(window, pt, NULL);
+        if (do_show) {
+            sfRenderWindow_clear(window, sfBlack);
+            for (uint32_t i = 0; i < pop_size; ++i) {
+                sfVector2f pos = {
+                    .x = pop[i].atb.arr[0][0] * ratio.x,
+                    .y = pop[i].atb.arr[1][0] * ratio.y
+                };
+                sfCircleShape *pt =sfCircleShape_create();
+                sfCircleShape_setFillColor(pt, pop[i].color);
+                sfCircleShape_setPosition(pt, pos);
+                sfCircleShape_setRadius(pt, RADIUS);
+                sfRenderWindow_drawCircleShape(window, pt, NULL);
+            }
+            sfRenderWindow_display(window);
         }
-        sfRenderWindow_display(window);
     }
     sfRenderWindow_destroy(window);
 
