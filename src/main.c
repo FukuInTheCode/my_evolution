@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
                 bool is_selected = false;
                 for (uint32_t j = 0; j < pop_size / 2; ++j) {
                     if (selected_id[j] == i) {
-                        is_selected == true;
+                        is_selected = true;
                         break;
                     }
                 }
