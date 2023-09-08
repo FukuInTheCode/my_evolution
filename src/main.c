@@ -6,13 +6,13 @@
 
 double set(double x)
 {
-    return (double)((int)x);
+    return -1. * (x < 0) + (x > 0);
 }
 
 
 int main(int argc, char* argv[])
 {
-    srand(69);
+    srand(time(0));
 
     CELL_DECLA(cell);
     cell.brain.size = 3;
@@ -23,6 +23,8 @@ int main(int argc, char* argv[])
     cell.brain.funcs.af = my_nn_sin;
     cell.brain.funcs.grad_af = my_nn_sin_grad;
     my_matrix_create(3, 1, 1, &cell.atb);
+    my_matrix_set(&(cell.atb), 0, 0, 64);
+    my_matrix_set(&(cell.atb), 1, 0, 64);
     my_nn_print(&cell.brain);
     MAT_PRINT(cell.atb);
 
@@ -43,20 +45,19 @@ int main(int argc, char* argv[])
 
         MAT_DECLA(datb);
         my_nn_predict(&(cell.brain), &(cell.atb), &datb);
+        datb.arr[0][0] = set(datb.arr[0][0]);
+        datb.arr[1][0] = set(datb.arr[1][0]);
         MAT_DECLA(new_atb);
         my_matrix_add(&new_atb, 2, &(cell.atb), &(datb));
         my_matrix_copy(&new_atb, &(cell.atb));
         my_matrix_free(2, &datb, &new_atb);
 
-        MAT_PRINT(cell.atb);
-
         sfRenderWindow_clear(window, sfBlack);
         sfCircleShape *pt =sfCircleShape_create();
         sfVector2f pos = {
-            .x = cell.atb.arr[0][0] * ratio.x + window_size.x / 2,
-            .y = cell.atb.arr[1][0] * ratio.y + window_size.y / 2
+            .x = cell.atb.arr[0][0] * ratio.x,
+            .y = cell.atb.arr[1][0] * ratio.y
         };
-        printf("%lf, %lf\n", pos.x, pos.y);
         sfVertex line[] = {
             {{pos.x  + RADIUS, pos.y  + RADIUS}, C_COLOR, {0, 0}},
             {{pos.x + 100. * cos(cell.atb.arr[2][0]) + RADIUS, pos.y + 100. * sin(cell.atb.arr[2][0]) + RADIUS}, C_COLOR, {0, 0}}
