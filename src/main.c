@@ -51,14 +51,14 @@ int main(int argc, char* argv[])
             if (event.type == sfEvtClosed)
                 sfRenderWindow_close(window);
         }
-        if (sfKeyboard_isKeyPressed(sfKeyLeft))
-            my_matrix_set(&(cell.atb), 0, 0, cell.atb.arr[0][0] - 1);
-        if (sfKeyboard_isKeyPressed(sfKeyRight))
-            my_matrix_set(&(cell.atb), 0, 0, cell.atb.arr[0][0] + 1);
-        if (sfKeyboard_isKeyPressed(sfKeyUp))
-            my_matrix_set(&(cell.atb), 1, 0, cell.atb.arr[1][0] - 1);
-        if (sfKeyboard_isKeyPressed(sfKeyDown))
-            my_matrix_set(&(cell.atb), 1, 0, cell.atb.arr[1][0] + 1);
+        // if (sfKeyboard_isKeyPressed(sfKeyLeft))
+        //     my_matrix_set(&(cell.atb), 0, 0, cell.atb.arr[0][0] - 1);
+        // if (sfKeyboard_isKeyPressed(sfKeyRight))
+        //     my_matrix_set(&(cell.atb), 0, 0, cell.atb.arr[0][0] + 1);
+        // if (sfKeyboard_isKeyPressed(sfKeyUp))
+        //     my_matrix_set(&(cell.atb), 1, 0, cell.atb.arr[1][0] - 1);
+        // if (sfKeyboard_isKeyPressed(sfKeyDown))
+        //     my_matrix_set(&(cell.atb), 1, 0, cell.atb.arr[1][0] + 1);
 
         if (tick <= max_tick) {
             for (uint32_t i = 0; i < pop_size, ++j) {
@@ -84,16 +84,17 @@ int main(int argc, char* argv[])
 
 
         sfRenderWindow_clear(window, sfBlack);
-        sfCircleShape *pt =sfCircleShape_create();
-        sfVector2f pos = {
-            .x = cell.atb.arr[0][0] * ratio.x,
-            .y = cell.atb.arr[1][0] * ratio.y
-        };
-        // printf("%lf, %lf\n", pos.x, pos.y);
-        sfCircleShape_setFillColor(pt, C_COLOR);
-        sfCircleShape_setPosition(pt, pos);
-        sfCircleShape_setRadius(pt, RADIUS);
-        sfRenderWindow_drawCircleShape(window, pt, NULL);
+        for (uint32_t i = 0; i < pop_size; ++i) {
+            sfVector2f pos = {
+                .x = pop[i].atb.arr[0][0] * ratio.x,
+                .y = pop[i].atb.arr[1][0] * ratio.y
+            };
+            sfCircleShape *pt =sfCircleShape_create();
+            sfCircleShape_setFillColor(pt, C_COLOR);
+            sfCircleShape_setPosition(pt, pos);
+            sfCircleShape_setRadius(pt, RADIUS);
+            sfRenderWindow_drawCircleShape(window, pt, NULL);
+        }
         sfRenderWindow_display(window);
     }
     sfRenderWindow_destroy(window);
