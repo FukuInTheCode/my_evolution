@@ -42,6 +42,14 @@ int main(int argc, char* argv[])
             if (event.type == sfEvtClosed)
                 sfRenderWindow_close(window);
         }
+        if (sfKeyboard_isKeyPressed(sfKeyLeft))
+            my_matrix_set(&(cell.atb), 0, 0, cell.atb.arr[0][0] - 1);
+        if (sfKeyboard_isKeyPressed(sfKeyRight))
+            my_matrix_set(&(cell.atb), 0, 0, cell.atb.arr[0][0] + 1);
+        if (sfKeyboard_isKeyPressed(sfKeyUp))
+            my_matrix_set(&(cell.atb), 1, 0, cell.atb.arr[1][0] - 1);
+        if (sfKeyboard_isKeyPressed(sfKeyDown))
+            my_matrix_set(&(cell.atb), 1, 0, cell.atb.arr[1][0] + 1);
 
         MAT_DECLA(datb);
         my_nn_predict(&(cell.brain), &(cell.atb), &datb);
