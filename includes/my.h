@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include "my_evo.h"
+#include "SFML/Graphics.h"
 
 #define CELL_DECLA(nvar) my_cell_t nvar = {.brain = {.size = 0, .name = "brain"}}
 

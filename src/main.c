@@ -25,6 +25,11 @@ int main(int argc, char* argv[])
                 sfRenderWindow_close(window);
         }
         sfRenderWindow_clear(window, sfBlack);
+        sfCircleShape *pt =sfCircleShape_create();
+        sfVector2f pos = {
+            .x = cell.x + window_size.x / 2,
+            .y = cell.y + window_size.y / 2
+        };
         sfRenderWindow_display(widnow);
     }
     sfRenderWindow_destroy(window);
