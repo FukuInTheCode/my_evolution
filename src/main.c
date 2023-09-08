@@ -105,20 +105,28 @@ int main(int argc, char* argv[])
                     continue;
                 }
                 for (uint32_t j = 0; j < pop_size / 2; ++j) {
-                    if (selected_reward[i] >= pop[i].reward)
+                    if (selected_reward[j] >= pop[i].reward)
                         continue;
 
-                    selected_reward[i] = pop[i].reward;
-                    selected_id[i] = i;
+                    selected_reward[j] = pop[i].reward;
+                    selected_id[j] = i;
                 }
             }
             pop[max_reward_id].color = sfBlue;
-
             ++tick;
         }
 
         sfRenderWindow_clear(window, sfBlack);
         for (uint32_t i = 0; i < pop_size; ++i) {
+            if (tick == max_tick + 1) {
+                bool is_selected = false;
+                for (uint32_t j = 0; j < pop_size / 2; ++j) {
+                    if (selected_id[j] == i)
+                        is_selected == true;
+                }
+                if (!is_selected)
+                    continue;
+            }
             sfVector2f pos = {
                 .x = pop[i].atb.arr[0][0] * ratio.x,
                 .y = pop[i].atb.arr[1][0] * ratio.y
