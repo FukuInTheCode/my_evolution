@@ -16,6 +16,7 @@
 typedef struct {
     double x;
     double y;
+    double angle;
     my_nn_t brain;
 } my_cell_t;
 
