@@ -102,10 +102,10 @@ int main(int argc, char* argv[])
                 if (i < pop_size / 2) {
                     selected_id[i] = i;
                     selected_reward[i] = pop[i].reward;
-                    printf("%u, %lf\n", selected_id[i], selected_reward[i]);
+                    // printf("%u, %lf\n", selected_id[i], selected_reward[i]);
                     continue;
                 }
-                double min_selected_reward = my_min(selected_reward);
+                double min_selected_reward = my_min(selected_reward, pop_size / 2);
                 if (min_selected_reward >= pop[i].reward)
                     continue;
                 uint32_t j;
@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
                         break;
                 }
                 selected_id[j] = i;
-                selected_reward = pop[i].reward;
+                selected_reward[j] = pop[i].reward;
             }
             pop[max_reward_id].color = sfBlue;
             for (uint32_t i = 0; i < pop_size / 2; ++i)
