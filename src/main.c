@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
                 }
                 ++tick;
                 if (tick == max_tick) {
-                    do_selction = true;
+                    do_selection = true;
                     do_gen = false;
                 }
             }
