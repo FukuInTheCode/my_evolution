@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     my_nn_print(&(cell.brain));
     my_nn_free(&(cell.brain));
 
-    sfVideoMode = {1500, 1500, 32};
+    sfVideoMode mode = {1500, 1500, 32};
     sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo", sfDefaultStyle, NULL);
     sfEvent event;
     sfVector2u window_size = sfRenderWindow_getSize(window);
@@ -30,7 +30,10 @@ int main(int argc, char* argv[])
             .x = cell.x + window_size.x / 2,
             .y = cell.y + window_size.y / 2
         };
-        sfRenderWindow_display(widnow);
+        sfCircleShape_setFillColor(pt, sfRed);
+        sfCircleShape_setPosition(pt, pos);
+        sfCircleShape_setRadius(pt, 10);
+        sfRenderWindow_display(window);
     }
     sfRenderWindow_destroy(window);
 
