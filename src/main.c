@@ -10,10 +10,10 @@ double set(double x)
 {
     return -1. * (x < 0) + (x > 0);
 }
-uint32_t max_tick = SIZE * sqrt(2);
-uint32_t tick = 0;
 int main(int argc, char* argv[])
 {
+    uint32_t max_tick = SIZE  * sqrt(2);
+    uint32_t tick = 0;
     srand(time(0));
 
     uint32_t pop_size = 100;
@@ -88,10 +88,16 @@ int main(int argc, char* argv[])
             }
             ++tick;
         } else if (tick == max_tick) {
+            double max_reward = -1.;
+            uint32_t max_reward_id;
             for (uint32_t i = 0; i < pop_size; ++i) {
                 pop[i].reward = 1. / (sqrt(pow(pop[i].atb.arr[0][0] - SIZE / 2., 2) + pow(pop[i].atb.arr[1][0] - SIZE / 2., 2)) + 1);
-                printf("%lf\n", pop[i].reward);
+                if (max_reward < pop[i].reward) {
+                    max_reward = pop[i].reward;
+                    max_reward_id = i;
+                }
             }
+            pop[max_reward_id].color = sfBlue;
 
             ++tick;
         }
@@ -103,7 +109,7 @@ int main(int argc, char* argv[])
                 .y = pop[i].atb.arr[1][0] * ratio.y
             };
             sfCircleShape *pt =sfCircleShape_create();
-            sfCircleShape_setFillColor(pt, C_COLOR);
+            sfCircleShape_setFillColor(pt, pop[i].color);
             sfCircleShape_setPosition(pt, pos);
             sfCircleShape_setRadius(pt, RADIUS);
             sfRenderWindow_drawCircleShape(window, pt, NULL);
