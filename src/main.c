@@ -16,6 +16,8 @@ int main(int argc, char* argv[])
     uint32_t tick = 0;
     srand(time(0));
 
+    double mutation_chance = 0.3;
+
     uint32_t pop_size = 100;
 
     uint32_t selected_id[pop_size / 2];
@@ -134,15 +136,28 @@ int main(int argc, char* argv[])
                 my_nn_to_array(&(pop[i].brain), &parent1);
                 double *parent2 = malloc(sizeof(double) * n_params);
                 my_nn_to_array(&(pop[i + 1].brain), &parent2);
-                double *child = malloc(sizeof(double) * n_params);
-                for (uint32_t j = 0; j < crosspoint; ++j)
-                    child[j] = parent1[j];
-                for (uint32_t j = crosspoint; j < n_params; ++j)
-                    child[j] = parent2[j];
-                my_nn_from_array(&(pop[unselected_id[unselect_i]].brain), child);
+                double *child1 = malloc(sizeof(double) * n_params);
+                double *child2 = malloc(sizeof(double) * n_params);
+                for (uint32_t j = 0; j < crosspoint; ++j) {
+                    child1[j] = parent1[j];
+                    child2[j] = parent2[j];
+                }
+                for (uint32_t j = crosspoint; j < n_params; ++j) {
+                    child1[j] = parent2[j];
+                    child2[j] = parent1[j];
+                }
+
+                if (my_randfloat(0, 1) < mutation_chance) {
+                    child1[my_randint(0, n_params - 1)] += my_randfloat(-1, 1);
+                    child2[my_randint(0, n_params - 1)] += my_randfloat(-1, 1);
+                }
+
+                my_nn_from_array(&(pop[unselected_id[unselect_i++]].brain), child1);
+                my_nn_from_array(&(pop[unselected_id[unselect_i++]].brain), child2);
                 free(parent1);
                 free(parent2);
-                free(child);
+                free(child1);
+                free(child2);
             }
             ++tick;
         } else {
