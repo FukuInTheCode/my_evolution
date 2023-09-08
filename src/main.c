@@ -120,10 +120,8 @@ int main(int argc, char* argv[])
                 pop[selected_id[i]].color = sfGreen;
             pop[max_reward_id].color = sfBlue;
 
-            for (uint32_t i = 0; i < pop_size / 2;  i += 2) {
+            for (uint32_t i = 0; i < pop_size / 2;  i += 2)
                 printf("%u: %u, %u\n", i, selected_id[i], selected_id[i + 1]);
-            }
-
 
             ++tick;
         }
