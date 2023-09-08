@@ -16,19 +16,26 @@ int main(int argc, char* argv[])
 {
     srand(69);
 
-    CELL_DECLA(cell);
-    cell.brain.size = 3;
+    uint32_t pop_size = 1000;
+
+    my_cell_t pop[pop_size];
+
     uint32_t dims[] = {3, 3, 3};
-    cell.brain.dims = dims;
-    my_nn_create(&cell.brain);
-    cell.brain.acti_type = base_type;
-    cell.brain.funcs.af = my_nn_sin;
-    cell.brain.funcs.grad_af = my_nn_sin_grad;
-    my_matrix_create(3, 1, 1, &cell.atb);
-    my_matrix_set(&(cell.atb), 0, 0, 64);
-    my_matrix_set(&(cell.atb), 1, 0, 64);
-    my_nn_print(&cell.brain);
-    MAT_PRINT(cell.atb);
+    for (uint32_t i = 0; i < pop_size; ++i) {
+        pop[i].brain.size = 3;
+        pop[i].brain.name = "brain";
+        pop[i].dims = dims;
+        my_nn_create(&pop[i].brain);
+        pop[i].brain.acti_type = base_type;
+        pop[i].brain.funcs.af = my_nn_sin;
+        pop[i].brain.funcs.grad_af = my_nn_sin_grad;
+        pop[i].atb.m = 0;
+        pop[i].atb.n = 0;
+        pop[i].atb.name = "atb";
+        my_matrix_create(3, 1, 1, &cell.atb);
+        my_matrix_set(&(cell.atb), 0, 0, my_randint(0, SIZE));
+        my_matrix_set(&(cell.atb), 1, 0, my_randint(0, SIZE));
+    }
 
     sfVideoMode mode = {1500, 1500, 32};
     sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo", sfDefaultStyle, NULL);
