@@ -54,47 +54,39 @@ int main(int argc, char* argv[])
     };
     sfEvent event;
     uint32_t gen_i = 0;
-    bool do_selection = false;
-    bool do_reset = false;
-    bool do_gen = true;
     while (sfRenderWindow_isOpen(window)) {
         while (sfRenderWindow_pollEvent(window, &event)) {
             if (event.type == sfEvtClosed)
                 sfRenderWindow_close(window);
         }
-        if (do_gen) {
-            if (tick < max_tick) {
-                for (uint32_t i = 0; i < pop_size; ++i) {
-                    MAT_DECLA(datb);
-                    my_nn_predict(&(pop[i].brain), &(pop[i].atb), &datb);
-                    datb.arr[0][0] = set(datb.arr[0][0]);
-                    datb.arr[1][0] = set(datb.arr[1][0]);
-                    MAT_DECLA(new_atb);
-                    my_matrix_add(&new_atb, 2, &(pop[i].atb), &datb);
-                    bool can_move = true;
-                    if (new_atb.arr[0][0] < 0)
+
+        if (tick < max_tick) {
+            for (uint32_t i = 0; i < pop_size; ++i) {
+                MAT_DECLA(datb);
+                my_nn_predict(&(pop[i].brain), &(pop[i].atb), &datb);
+                datb.arr[0][0] = set(datb.arr[0][0]);
+                datb.arr[1][0] = set(datb.arr[1][0]);
+                MAT_DECLA(new_atb);
+                my_matrix_add(&new_atb, 2, &(pop[i].atb), &datb);
+                bool can_move = true;
+                if (new_atb.arr[0][0] < 0)
+                    can_move = false;
+                if (new_atb.arr[1][0] < 0)
+                    can_move = false;
+                if (new_atb.arr[0][0] > SIZE)
+                    can_move = false;
+                if (new_atb.arr[1][0] > SIZE)
+                    can_move = false;
+                for (uint32_t j = 0; j < pop_size; ++j) {
+                    if (my_matrix_equals(&(pop[j].atb), &new_atb))
                         can_move = false;
-                    if (new_atb.arr[1][0] < 0)
-                        can_move = false;
-                    if (new_atb.arr[0][0] > SIZE)
-                        can_move = false;
-                    if (new_atb.arr[1][0] > SIZE)
-                        can_move = false;
-                    for (uint32_t j = 0; j < pop_size; ++j) {
-                        if (my_matrix_equals(&(pop[j].atb), &new_atb))
-                            can_move = false;
-                    }
-                    if (can_move)
-                        my_matrix_copy(&new_atb, &(pop[i].atb));
-                    my_matrix_free(2, &datb, &new_atb);
                 }
-                ++tick;
-                if (tick == max_tick) {
-                    do_selection = true;
-                    do_gen = false;
-                }
+                if (can_move)
+                    my_matrix_copy(&new_atb, &(pop[i].atb));
+                my_matrix_free(2, &datb, &new_atb);
             }
-        } else if (do_selection) {
+            ++tick;
+        } else if (tick == max_tick) {
             double max_reward = -1.;
             uint32_t unselected_id[pop_size / 2];
             uint32_t unselect_i = 0;
@@ -158,40 +150,25 @@ int main(int argc, char* argv[])
                 free(child1);
                 free(child2);
             }
-
+            ++tick;
             printf("gen %u's avr reward: %lf\n", gen_i++, total_reward / pop_size);
             for (uint32_t i = 0; i < pop_size / 2; ++i)
                 pop[selected_id[i]].color = sfGreen;
             for (uint32_t i = 0; i < pop_size / 2; ++i)
                 pop[unselected_id[i]].color = sfCyan;
             pop[max_reward_id].color = sfBlue;
-            do_reset = true;
-        } else if (do_reset) {
+        } else {
             usleep(1000000);
             for (uint32_t i = 0; i < pop_size; ++i){
                 my_matrix_randint(0, SIZE, 1, &(pop[i].atb));
                 pop[i].color = sfRed;
             }
             pop[max_reward_id].color = sfBlue;
-            do_gen = true;
-            do_selection = false;
-            do_reset = false;
             tick = 0;
         }
 
         sfRenderWindow_clear(window, sfBlack);
         for (uint32_t i = 0; i < pop_size; ++i) {
-            // if (tick == max_tick + 1) {
-            //     bool is_selected = false;
-            //     for (uint32_t j = 0; j < pop_size / 2; ++j) {
-            //         if (selected_id[j] == i) {
-            //             is_selected = true;
-            //             break;
-            //         }
-            //     }
-            //     if (!is_selected)
-            //         continue;
-            // }
             sfVector2f pos = {
                 .x = pop[i].atb.arr[0][0] * ratio.x,
                 .y = pop[i].atb.arr[1][0] * ratio.y
