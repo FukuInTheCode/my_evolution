@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 {
     srand(69);
 
-    uint32_t pop_size = 1000;
+    uint32_t pop_size = 100;
 
     my_cell_t pop[pop_size];
 
@@ -67,20 +67,22 @@ int main(int argc, char* argv[])
                 datb.arr[0][0] = set(datb.arr[0][0]);
                 datb.arr[1][0] = set(datb.arr[1][0]);
                 MAT_DECLA(new_atb);
-                my_matrix_add(&new_atb, 2, &(pop[i].atb), &(datb));
+                my_matrix_add(&new_atb, 2, &(pop[i].atb), &datb);
                 my_matrix_copy(&new_atb, &(pop[i].atb));
                 my_matrix_free(2, &datb, &new_atb);
-                ++tick;
-                if ((int)pop[i].atb.arr[0][0] < 0)
+                if ((int)(pop[i].atb.arr[0][0]) < 0)
                     my_matrix_set(&(pop[i].atb), 0, 0, 0);
-                if ((int)pop[i].atb.arr[1][0] < 0)
+                if ((int)(pop[i].atb.arr[1][0]) < 0)
                     my_matrix_set(&(pop[i].atb), 1, 0, 0);
-                if ((int)pop[i].atb.arr[0][0] > SIZE)
+                if ((int)(pop[i].atb.arr[0][0]) > SIZE)
                     my_matrix_set(&(pop[i].atb), 0, 0, SIZE);
-                if ((int)pop[i].atb.arr[1][0] > SIZE)
+                if ((int)(pop[i].atb.arr[1][0]) > SIZE)
                     my_matrix_set(&(pop[i].atb), 1, 0, SIZE);
             }
+            ++tick;
         }
+
+        printf("Hello\n");
 
 
         sfRenderWindow_clear(window, sfBlack);
