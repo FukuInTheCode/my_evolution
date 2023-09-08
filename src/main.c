@@ -61,25 +61,27 @@ int main(int argc, char* argv[])
             my_matrix_set(&(cell.atb), 1, 0, cell.atb.arr[1][0] + 1);
 
         if (tick <= max_tick) {
-            MAT_DECLA(datb);
-            my_nn_predict(&(cell.brain), &(cell.atb), &datb);
-            datb.arr[0][0] = set(datb.arr[0][0]);
-            datb.arr[1][0] = set(datb.arr[1][0]);
-            MAT_DECLA(new_atb);
-            my_matrix_add(&new_atb, 2, &(cell.atb), &(datb));
-            my_matrix_copy(&new_atb, &(cell.atb));
-            my_matrix_free(2, &datb, &new_atb);
-            ++tick;
+            for (uint32_t i = 0; i < pop_size, ++j) {
+                MAT_DECLA(datb);
+                my_nn_predict(&(pop[i].brain), &(pop[i].atb), &datb);
+                datb.arr[0][0] = set(datb.arr[0][0]);
+                datb.arr[1][0] = set(datb.arr[1][0]);
+                MAT_DECLA(new_atb);
+                my_matrix_add(&new_atb, 2, &(pop[i].atb), &(datb));
+                my_matrix_copy(&new_atb, &(pop[i].atb));
+                my_matrix_free(2, &datb, &new_atb);
+                ++tick;
+                if ((int)cell.atb.arr[0][0] < 0)
+                    my_matrix_set(&(cell.atb), 0, 0, 0);
+                if ((int)cell.atb.arr[1][0] < 0)
+                    my_matrix_set(&(cell.atb), 1, 0, 0);
+                if ((int)cell.atb.arr[0][0] > SIZE)
+                    my_matrix_set(&(cell.atb), 0, 0, SIZE);
+                if ((int)cell.atb.arr[1][0] > SIZE)
+                    my_matrix_set(&(cell.atb), 1, 0, SIZE);
+            }
         }
 
-        if ((int)cell.atb.arr[0][0] < 0)
-            my_matrix_set(&(cell.atb), 0, 0, 0);
-        if ((int)cell.atb.arr[1][0] < 0)
-            my_matrix_set(&(cell.atb), 1, 0, 0);
-        if ((int)cell.atb.arr[0][0] > SIZE)
-            my_matrix_set(&(cell.atb), 0, 0, SIZE);
-        if ((int)cell.atb.arr[1][0] > SIZE)
-            my_matrix_set(&(cell.atb), 1, 0, SIZE);
 
         sfRenderWindow_clear(window, sfBlack);
         sfCircleShape *pt =sfCircleShape_create();
