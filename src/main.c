@@ -35,6 +35,7 @@ int main(int argc, char* argv[])
         my_matrix_create(2, 1, 1, &pop[i].atb);
         my_matrix_set(&(pop[i].atb), 0, 0, my_randint(0, SIZE));
         my_matrix_set(&(pop[i].atb), 1, 0, my_randint(0, SIZE));
+        pop[i].color = C_COLOR;
     }
 
     sfVideoMode mode = {1500, 1500, 32};
@@ -87,7 +88,12 @@ int main(int argc, char* argv[])
             }
             ++tick;
         } else if (tick == max_tick) {
-            for 
+            for (uint32_t i = 0; i < pop_size; ++i) {
+                pop[i].reward = 1. / (sqrt(pow(pop[i].atb.arr[0][0] - SIZE / 2., 2) + pow(pop[i].atb.arr[1][0] - SIZE / 2., 2)) + 1);
+                printf("%lf\n", pop[i].reward);
+            }
+
+            ++tick;
         }
 
         sfRenderWindow_clear(window, sfBlack);

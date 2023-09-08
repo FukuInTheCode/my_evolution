@@ -16,6 +16,7 @@ typedef struct {
     my_nn_t brain;
     my_matrix_t atb;
     double reward;
+    sfColor color;
 } my_cell_t;
 
 #define CELL_DECLA(nvar) my_cell_t nvar = { \
