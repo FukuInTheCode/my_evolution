@@ -1,18 +1,19 @@
 #include "../includes/my.h"
 
-#define RADIUS 16
+#define RADIUS 5
 
 #define C_COLOR sfRed
+
+#define SIZE 128.
 
 double set(double x)
 {
     return -1. * (x < 0) + (x > 0);
 }
 
-
 int main(int argc, char* argv[])
 {
-    srand(time(0));
+    srand(69);
 
     CELL_DECLA(cell);
     cell.brain.size = 3;
@@ -33,8 +34,8 @@ int main(int argc, char* argv[])
 
     sfVector2u window_size = sfRenderWindow_getSize(window);
     sfVector2f ratio = {
-        .x = window_size.x / 128,
-        .y = window_size.y / 128
+        .x = (window_size.x - 2 * RADIUS) / SIZE,
+        .y = (window_size.y - 2 * RADIUS) / SIZE
     };
     sfEvent event;
     while (sfRenderWindow_isOpen(window)) {
@@ -60,17 +61,23 @@ int main(int argc, char* argv[])
         my_matrix_copy(&new_atb, &(cell.atb));
         my_matrix_free(2, &datb, &new_atb);
 
+        if ((int)cell.atb.arr[0][0] < 0)
+            my_matrix_set(&(cell.atb), 0, 0, 0);
+        if ((int)cell.atb.arr[1][0] < 0)
+            my_matrix_set(&(cell.atb), 1, 0, 0);
+        if ((int)cell.atb.arr[0][0] > SIZE)
+            my_matrix_set(&(cell.atb), 0, 0, SIZE);
+        if ((int)cell.atb.arr[1][0] > SIZE)
+            my_matrix_set(&(cell.atb), 1, 0, SIZE);
+
+
         sfRenderWindow_clear(window, sfBlack);
         sfCircleShape *pt =sfCircleShape_create();
         sfVector2f pos = {
             .x = cell.atb.arr[0][0] * ratio.x,
             .y = cell.atb.arr[1][0] * ratio.y
         };
-        sfVertex line[] = {
-            {{pos.x  + RADIUS, pos.y  + RADIUS}, C_COLOR, {0, 0}},
-            {{pos.x + 100. * cos(cell.atb.arr[2][0]) + RADIUS, pos.y + 100. * sin(cell.atb.arr[2][0]) + RADIUS}, C_COLOR, {0, 0}}
-        };
-        sfRenderWindow_drawPrimitives(window, line, 2, sfLines, NULL);
+        // printf("%lf, %lf\n", pos.x, pos.y);
         sfCircleShape_setFillColor(pt, C_COLOR);
         sfCircleShape_setPosition(pt, pos);
         sfCircleShape_setRadius(pt, RADIUS);
