@@ -13,12 +13,13 @@ int main(int argc, char* argv[])
     cell.brain.size = 3;
     uint32_t dims[] = {3, 3, 3};
     cell.brain.dims = dims;
-    my_matrix_create(1, 3, 1, &cell.atb);
     my_nn_create(&cell.brain);
+    cell.brain.acti_type = base_type;
+    cell.brain.funcs.af = my_nn_sin;
+    cell.brain.funcs.grad_af = my_nn_sin_grad;
+    my_matrix_create(1, 3, 1, &cell.atb);
     my_nn_print(&cell.brain);
     MAT_PRINT(cell.atb);
-
-#if 0
 
     sfVideoMode mode = {1500, 1500, 32};
     sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo", sfDefaultStyle, NULL);
@@ -29,15 +30,19 @@ int main(int argc, char* argv[])
             if (event.type == sfEvtClosed)
                 sfRenderWindow_close(window);
         }
+
+        MAT_DECLA(datb);
+        my_nn_pre
+
         sfRenderWindow_clear(window, sfBlack);
         sfCircleShape *pt =sfCircleShape_create();
         sfVector2f pos = {
-            .x = cell.atrbt.arr[0][0] + window_size.x / 2,
-            .y = cell.atrbt.arr[0][1] + window_size.y / 2
+            .x = cell.atb.arr[0][0] + window_size.x / 2,
+            .y = cell.atb.arr[0][1] + window_size.y / 2
         };
         sfVertex line[] = {
             {{pos.x  + RADIUS, pos.y  + RADIUS}, C_COLOR, {0, 0}},
-            {{pos.x + 100. * cos(cell.atrbt.arr[0][2]) + RADIUS, pos.y + 100. * sin(cell.atrbt.arr[0][2]) + RADIUS}, C_COLOR, {0, 0}}
+            {{pos.x + 100. * cos(cell.atb.arr[0][2]) + RADIUS, pos.y + 100. * sin(cell.atb.arr[0][2]) + RADIUS}, C_COLOR, {0, 0}}
         };
         sfRenderWindow_drawPrimitives(window, line, 2, sfLines, NULL);
         sfCircleShape_setFillColor(pt, C_COLOR);
@@ -47,7 +52,6 @@ int main(int argc, char* argv[])
         sfRenderWindow_display(window);
     }
     sfRenderWindow_destroy(window);
-#endif
 
     return 0;
 }
