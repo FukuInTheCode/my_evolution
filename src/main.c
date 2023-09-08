@@ -98,8 +98,10 @@ int main(int argc, char* argv[])
             uint32_t max_reward_id;
             uint32_t unselected_id[pop_size / 2];
             uint32_t unselect_i = 0;
+            double total_reward = 0;
             for (uint32_t i = 0; i < pop_size; ++i) {
                 pop[i].reward = 1. / (sqrt(pow(pop[i].atb.arr[0][0] - SIZE / 2., 2) + pow(pop[i].atb.arr[1][0] - SIZE / 2., 2)) + 1);
+                total_reward += pop[i].reward;
                 if (max_reward < pop[i].reward) {
                     max_reward = pop[i].reward;
                     max_reward_id = i;
@@ -123,6 +125,7 @@ int main(int argc, char* argv[])
                 selected_id[j] = i;
                 selected_reward[j] = pop[i].reward;
             }
+            printf("%u's average reward: %lf\n", gen_i++, total_reward / pop_size);
             for (uint32_t i = 0; i < pop_size / 2; ++i)
                 pop[selected_id[i]].color = sfGreen;
             for (uint32_t i = 0; i < pop_size / 2; ++i)
