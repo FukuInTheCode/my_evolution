@@ -116,19 +116,42 @@ int main(int argc, char* argv[])
                     if (min_selected_reward == selected_reward[j])
                         break;
                 }
-                unselected_id[unselect_i++] = selected_reward[j];
+                unselected_id[unselect_i++] = selected_id[j];
                 selected_id[j] = i;
                 selected_reward[j] = pop[i].reward;
             }
             for (uint32_t i = 0; i < pop_size / 2; ++i)
                 pop[selected_id[i]].color = sfGreen;
+            for (uint32_t i = 0; i < pop_size / 2; ++i)
+                pop[unselected_id[i]].color = sfCyan;
             pop[max_reward_id].color = sfBlue;
 
             uint32_t n_params = my_nn_get_n_params(&(pop[0].brain));
+            unselect_i = 0;
             for (uint32_t i = 0; i < pop_size / 2;  i += 2) {
                 uint32_t crosspoint = my_randint(0, n_params);
+                double *parent1 = malloc(sizeof(double) * n_params);
+                my_nn_to_array(&(pop[i].brain), &parent1);
+                double *parent2 = malloc(sizeof(double) * n_params);
+                my_nn_to_array(&(pop[i + 1].brain), &parent2);
+                double *child = malloc(sizeof(double) * n_params);
+                for (uint32_t j = 0; j < crosspoint; ++j)
+                    child[j] = parent1[j];
+                for (uint32_t j = crosspoint; j < n_params; ++j)
+                    child[j] = parent2[j];
+                my_nn_from_array(&(pop[unselected_id[unselect_i]].brain), child);
+                free(parent1);
+                free(parent2);
+                free(child);
             }
             ++tick;
+        } else {
+            usleep(1000000);
+            for (uint32_t i = 0; i < pop_size; ++i){
+                my_matrix_randint(0, SIZE, 1, &(pop[i].atb));
+                pop[i].color = sfRed;
+            }
+            tick = 0;
         }
 
         sfRenderWindow_clear(window, sfBlack);
