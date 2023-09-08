@@ -7,12 +7,13 @@
 
 int main(int argc, char* argv[])
 {
+    srand(69);
 
     CELL_DECLA(cell);
     cell.x = 0;
     cell.y = 0;
     cell.angle = 0;
-    uint32_t dim[] = {2, 3, 3};
+    uint32_t dim[] = {3, 3, 3};
     cell.brain.dims = dim;
     cell.brain.size = sizeof(dim) / sizeof(dim[0]);
     my_nn_create(&(cell.brain));

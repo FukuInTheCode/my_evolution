@@ -15,9 +15,7 @@
 #define CELL_DECLA(nvar) my_cell_t nvar = {.brain = {.size = 0, .name = "brain"}}
 
 typedef struct {
-    double x;
-    double y;
-    double angle;
+    my_matrix_t attribute;
     my_nn_t brain;
 } my_cell_t;
 
