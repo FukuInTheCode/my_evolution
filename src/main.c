@@ -71,14 +71,14 @@ int main(int argc, char* argv[])
                 my_matrix_copy(&new_atb, &(pop[i].atb));
                 my_matrix_free(2, &datb, &new_atb);
                 ++tick;
-                if ((int)cell.atb.arr[0][0] < 0)
-                    my_matrix_set(&(cell.atb), 0, 0, 0);
-                if ((int)cell.atb.arr[1][0] < 0)
-                    my_matrix_set(&(cell.atb), 1, 0, 0);
-                if ((int)cell.atb.arr[0][0] > SIZE)
-                    my_matrix_set(&(cell.atb), 0, 0, SIZE);
-                if ((int)cell.atb.arr[1][0] > SIZE)
-                    my_matrix_set(&(cell.atb), 1, 0, SIZE);
+                if ((int)pop[i].atb.arr[0][0] < 0)
+                    my_matrix_set(&(pop[i].atb), 0, 0, 0);
+                if ((int)pop[i].atb.arr[1][0] < 0)
+                    my_matrix_set(&(pop[i].atb), 1, 0, 0);
+                if ((int)pop[i].atb.arr[0][0] > SIZE)
+                    my_matrix_set(&(pop[i].atb), 0, 0, SIZE);
+                if ((int)pop[i].atb.arr[1][0] > SIZE)
+                    my_matrix_set(&(pop[i].atb), 1, 0, SIZE);
             }
         }
 
