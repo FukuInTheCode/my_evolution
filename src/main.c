@@ -18,6 +18,9 @@ int main(int argc, char* argv[])
 
     uint32_t pop_size = 100;
 
+    uint32_t selected_id[pop_size / 2];
+    double selected_reward[pop_size / 2];
+
     my_cell_t pop[pop_size];
 
     uint32_t dims[] = {2, 3, 2};
@@ -95,6 +98,18 @@ int main(int argc, char* argv[])
                 if (max_reward < pop[i].reward) {
                     max_reward = pop[i].reward;
                     max_reward_id = i;
+                }
+                if (i < pop_size / 2) {
+                    selected_id[i] = i;
+                    selected_reward[i] = pop[i].reward;
+                    continue;
+                }
+                for (uint32_t j = 0; j < pop_size / 2; ++j) {
+                    if (selected_reward[i] >= pop[i].reward)
+                        continue;
+
+                    selected_reward[i] = pop[i].reward;
+                    selected_id[i] = i;
                 }
             }
             pop[max_reward_id].color = sfBlue;
