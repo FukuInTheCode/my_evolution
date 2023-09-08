@@ -6,7 +6,7 @@ CSFML	   = -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window
 
 LIB        = -l$(NAME)
 
-DEPENDENCIES = -lmy_matrix -lmy_neuralnetwork $(CSFML)
+DEPENDENCIES = -lmy_math -lmy_matrix -lmy_neuralnetwork $(CSFML)
 
 SRC        = $(wildcard ./src/*.c)
 
