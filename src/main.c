@@ -14,7 +14,7 @@ uint32_t max_tick = SIZE * sqrt(2);
 uint32_t tick = 0;
 int main(int argc, char* argv[])
 {
-    srand(69);
+    srand(time(0));
 
     uint32_t pop_size = 100;
 
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
         // if (sfKeyboard_isKeyPressed(sfKeyDown))
         //     my_matrix_set(&(cell.atb), 1, 0, cell.atb.arr[1][0] + 1);
 
-        if (tick <= max_tick) {
+        if (tick < max_tick) {
             for (uint32_t i = 0; i < pop_size; ++i) {
                 MAT_DECLA(datb);
                 my_nn_predict(&(pop[i].brain), &(pop[i].atb), &datb);
@@ -86,10 +86,9 @@ int main(int argc, char* argv[])
                 my_matrix_free(2, &datb, &new_atb);
             }
             ++tick;
+        } else if (tick == max_tick) {
+            for 
         }
-
-        printf("Hello\n");
-
 
         sfRenderWindow_clear(window, sfBlack);
         for (uint32_t i = 0; i < pop_size; ++i) {
