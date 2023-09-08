@@ -1,8 +1,7 @@
 #include "../includes/my.h"
 
 
-int main(int argc, char* argv[]) {
-    hello();
-    printHelloFromLib();
+int main(int argc, char* argv[])
+{
     return 0;
 }

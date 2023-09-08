@@ -1,10 +1,12 @@
-NAME       = TBD
+NAME       = my_evolution
 
 CFLAGS     = -W -Wall -Wextra
 
+CSFML	   = -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window
+
 LIB        = -l$(NAME)
 
-DEPENDENCIES = TBD
+DEPENDENCIES = -lmy_matrix -lmy_neuralnetwork $(CSFML)
 
 SRC        = $(wildcard ./src/*.c)
 
