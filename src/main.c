@@ -15,6 +15,19 @@ int main(int argc, char* argv[])
     my_nn_print(&(cell.brain));
     my_nn_free(&(cell.brain));
 
+    sfVideoMode = {1500, 1500, 32};
+    sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo", sfDefaultStyle, NULL);
+    sfEvent event;
+    sfVector2u window_size = sfRenderWindow_getSize(window);
+    while (sfRenderWindow_isOpen(window)) {
+        while (sfRenderWindow_pollEvent(window, &event)) {
+            if (event.type == sfEvtClosed)
+                sfRenderWindow_close(window);
+        }
+        sfRenderWindow_clear(window, sfBlack);
+        sfRenderWindow_display(widnow);
+    }
+    sfRenderWindow_destroy(window);
 
     return 0;
 }
