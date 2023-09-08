@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 
     my_cell_t pop[pop_size];
 
-    uint32_t dims[] = {3, 3, 3};
+    uint32_t dims[] = {2, 3, 2};
     for (uint32_t i = 0; i < pop_size; ++i) {
         pop[i].brain.size = 3;
         pop[i].brain.name = "brain";
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
         pop[i].atb.m = 0;
         pop[i].atb.n = 0;
         pop[i].atb.name = "atb";
-        my_matrix_create(3, 1, 1, &pop[i].atb);
+        my_matrix_create(2, 1, 1, &pop[i].atb);
         my_matrix_set(&(pop[i].atb), 0, 0, my_randint(0, SIZE));
         my_matrix_set(&(pop[i].atb), 1, 0, my_randint(0, SIZE));
     }
@@ -77,6 +77,10 @@ int main(int argc, char* argv[])
                     can_move = false;
                 if (new_atb.arr[1][0] > SIZE)
                     can_move = false;
+                for (uint32_t j = 0; j < pop_size; ++j) {
+                    if (my_matrix_equals(&(pop[j].atb), &new_atb))
+                        can_move = false;
+                }
                 if (can_move)
                     my_matrix_copy(&new_atb, &(pop[i].atb));
                 my_matrix_free(2, &datb, &new_atb);
