@@ -15,8 +15,8 @@ int main(int argc, char* argv[])
     // my_evo_t
 
     my_evo_t evo = {
-        .pop_size = 100,
-        .max_tick_per_gen = SIZE / 3 * 2,
+        .pop_size = 12,
+        .max_tick_per_gen = SIZE / 3. * 2.,
         .mutation_chance = 0.3,
         .mutation_range = 1.,
         .agent_struct_size = sizeof(my_cell_t)
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
     uint32_t dims[] = {2, 3, 2};
     for (uint32_t i = 0; i < evo.pop_size; ++i) {
-        my_cell_t *cell = (my_cell_t *)((char *)evo.pop + evo.agent_struct_size * i);
+        my_cell_t *cell = (my_cell_t *)((char *)(evo.pop) + evo.agent_struct_size * i);
         cell->brain.dims = dims;
         cell->brain.size = 3;
         cell->brain.name = "cell";
@@ -99,13 +99,15 @@ int main(int argc, char* argv[])
                         my_matrix_set(&unselected, i - i_selected, 0, min_i);
                         my_matrix_set(&selected, min_i, 0, i);
                         my_matrix_set(&selected, min_i, 1, cell_reward);
+                        continue;
                     }
+                    my_matrix_set(&unselected, i - i_selected, 0, i);
                 } else
                     my_matrix_set(&unselected, i - i_selected, 0, i);
             }
             printf("%u\n", i_selected);
-            // MAT_PRINT(selected);
-            // MAT_PRINT(unselected);
+            MAT_PRINT(selected);
+            MAT_PRINT(unselected);
             ++tick;
         } else {
             // duplica
