@@ -1,11 +1,5 @@
 #include "../includes/my.h"
 
-#define RADIUS 5
-
-#define C_COLOR sfRed
-
-#define SIZE 512.
-
 double set(double x)
 {
     return -1. * (x < 0) + (x > 0);

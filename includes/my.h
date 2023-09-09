@@ -22,3 +22,9 @@ typedef struct {
 #define CELL_DECLA(nvar) my_cell_t nvar = { \
         .brain = {.size = 0, .name = "brain"}, \
         .atb = {.m = 0, .n = 0, .name = "atb"} };
+
+#define RADIUS 5
+
+#define C_COLOR sfRed
+
+#define SIZE 512.
