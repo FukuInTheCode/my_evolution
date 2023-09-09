@@ -8,9 +8,9 @@ static double set(double x)
 static void use_brain(my_cell_t *cell, my_matrix_t *new_atb)
 {
     MAT_DECLA(datb);
-    my_nn_predict(&(cell_ptr->brain), &(cell_ptr->atb), &datb);
+    my_nn_predict(&(cell->brain), &(cell->atb), &datb);
     my_matrix_applyfunc_2(&datb, set);
-    my_matrix_add(new_atb, 2, &(cell_ptr->atb), &datb);
+    my_matrix_add(new_atb, 2, &(cell->atb), &datb);
     MAT_FREE(datb);
 }
 
