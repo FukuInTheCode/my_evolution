@@ -9,7 +9,8 @@
         "cmath": "c",
         "my_evo.h": "c",
         "my_neuralnetwork.h": "c",
-        "my_matrix.h": "c"
+        "my_matrix.h": "c",
+        "limits": "c"
     },
     "epilinter.tokenizer_address": "ws://54.36.183.139:8081"
 }

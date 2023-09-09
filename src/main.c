@@ -92,12 +92,12 @@ int main(int argc, char* argv[])
                     my_matrix_set(&selected, i_selected, 1, cell_reward);
                     ++i_selected;
                 } else {
-                    my_cell_t *cell_ptr = (my_cell_t *)cell;
-                    uint32_t min = my_matrix_mincol(&(cell_ptr->atb), 1);
-                    if (cell_reward > min) {
-                        uint32_t min_i = my_matrix_find_row_index(&(cell_ptr->atb), 1, min);
+                    uint32_t min_reward = my_matrix_mincol(&selected, 1);
+                    if (cell_reward > min_reward && i_selected >= evo.pop_size / 2) {
+                        uint32_t min_i = my_matrix_find_row_index(&selected, 1, min_reward);
                         my_matrix_set(&selected, min_i, 0, i);
                         my_matrix_set(&selected, min_i, 1, cell_reward);
+                        my_matrix_set(&unselected, i - i_selected, 0, min_i);
                     } else
                         my_matrix_set(&unselected, i - i_selected, 0, i);
                 }
