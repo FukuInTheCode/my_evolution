@@ -1,5 +1,14 @@
 #include "../../includes/my.h"
 
+static void handle_event(sfRenderWindow *window)
+{
+    sfEvent event;
+    while (sfRenderWindow_pollEvent(window, &event)) {
+        if (event.type == sfEvtClosed)
+            sfRenderWindow_close(window);
+    }
+}
+
 void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
 {
     sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo", sfDefaultStyle, NULL);
@@ -9,7 +18,6 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
         .x = (window_size.x - 2 * RADIUS) / SIZE,
         .y = (window_size.y - 2 * RADIUS) / SIZE
     };
-    sfEvent event;
     uint32_t tick = 0;
     uint32_t i_selected = 0;
     MAT_DECLA(selected);
@@ -18,10 +26,6 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
     my_matrix_create(evo->pop_size, 1, 1, &unselected);
     uint32_t gen_i = 0;
     while (sfRenderWindow_isOpen(window)) {
-        while (sfRenderWindow_pollEvent(window, &event)) {
-            if (event.type == sfEvtClosed)
-                sfRenderWindow_close(window);
-        }
 
         // show
         sfRenderWindow_clear(window, sfBlack);
