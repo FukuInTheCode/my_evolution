@@ -19,7 +19,8 @@ int main(int argc, char* argv[])
         .max_tick_per_gen = SIZE / 3. * 2.,
         .mutation_chance = 0.3,
         .mutation_range = 1.,
-        .agent_struct_size = sizeof(my_cell_t)
+        .agent_struct_size = sizeof(my_cell_t),
+        .do_per_n_gen = 1
     };
     evo.pop = calloc(evo.pop_size, evo.agent_struct_size);
     if (evo.pop == NULL) {
