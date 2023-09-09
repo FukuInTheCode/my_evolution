@@ -11,15 +11,10 @@ static void handle_event(sfRenderWindow *window)
 
 static void handle_show(my_evo_t *evo, sfRenderWindow *window)
 {
-    sfVector2u window_size = sfRenderWindow_getSize(window);
-    sfVector2f ratio = {
-        .x = (window_size.x - 2 * RADIUS) / SIZE,
-        .y = (window_size.y - 2 * RADIUS) / SIZE
-    };
     sfRenderWindow_clear(window, sfBlack);
     for (uint32_t i = 0; i < evo->pop_size; ++i) {
         void *cell = (void *)((char *)(evo->pop) + i * evo->agent_struct_size);
-        my_cell_show(window, cell, ratio);
+        my_cell_show(window, cell);
     }
     sfRenderWindow_display(window);
 }
