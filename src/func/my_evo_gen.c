@@ -3,12 +3,13 @@
 uint32_t my_evo_do_tick(my_evo_t *evo, uint32_t tick,\
                 my_matrix_t *selected, my_matrix_t *unselected)
 {
+    uint32_t i_selected;
     if (tick < evo->max_tick_per_gen) {
         my_cell_update(evo->pop, evo->pop_size);
         ++tick;
     } else if (tick == evo->max_tick_per_gen) {
         // selection
-        my_evo_do_selection(evo, selected, unselected);
+        i_selected = my_evo_do_selection(evo, selected, unselected);
         ++tick;
     } else {
         // duplica
