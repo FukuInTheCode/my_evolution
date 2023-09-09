@@ -11,6 +11,11 @@ static void handle_event(sfRenderWindow *window)
 
 static void handle_show(my_evo_t *evo, sfRenderWindow *window)
 {
+    sfVector2u window_size = sfRenderWindow_getSize(window);
+    sfVector2f ratio = {
+        .x = (window_size.x - 2 * RADIUS) / SIZE,
+        .y = (window_size.y - 2 * RADIUS) / SIZE
+    };
     sfRenderWindow_clear(window, sfBlack);
     for (uint32_t i = 0; i < evo->pop_size; ++i) {
         void *cell = (void *)((char *)(evo->pop) + i * evo->agent_struct_size);
@@ -23,10 +28,6 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
 {
     sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo",\
                                                 sfDefaultStyle, NULL);
-    sfVector2f ratio = {
-        .x = (mode.width - 2 * RADIUS) / SIZE,
-        .y = (mode.height - 2 * RADIUS) / SIZE
-    };
     uint32_t tick = 0;
     MAT_DECLA(selected);
     my_matrix_create(evo->pop_size / 2, 2, 1, &selected);
