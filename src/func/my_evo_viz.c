@@ -24,6 +24,21 @@ static void handle_show(my_evo_t *evo, sfRenderWindow *window)
     sfRenderWindow_display(window);
 }
 
+static uint32_t do_gen(my_evo_t *evo, my_matrix_t **s_matrices,\
+                                uint32_t tick, uint32_t i_selected)
+{
+    if (tick < evo->max_tick_per_gen) {
+        my_cell_update(evo->pop, evo->pop_size);
+    } else if (tick == evo->max_tick_per_gen) {
+        i_selected = my_evo_do_selection(evo, &(s_matrices[0]), &(s_matrices[1]));
+    } else {
+        my_evo_duplica(evo, &(s_matrices[0]), &(s_matrices[1]), i_selected);
+        i_selected = 0;
+        my_matrix_setall(&(s_matrices[1]), 0);
+        my_matrix_setall(&(s_matrices[0]), 0);
+    }
+}
+
 
 void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
 {
@@ -38,16 +53,7 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
     while (sfRenderWindow_isOpen(window)) {
         handle_event(window);
         handle_show(evo, window);
-        if (tick < evo->max_tick_per_gen) {
-            my_cell_update(evo->pop, evo->pop_size);
-        } else if (tick == evo->max_tick_per_gen) {
-            i_selected = my_evo_do_selection(evo, &(s_matrices[0]), &(s_matrices[1]));
-        } else {
-            my_evo_duplica(evo, &(s_matrices[0]), &(s_matrices[1]), i_selected);
-            i_selected = 0;
-            my_matrix_setall(&(s_matrices[1]), 0);
-            my_matrix_setall(&(s_matrices[0]), 0);
-        }
+        i_selected = do_gen(evo, &s_matrices, tick, i_selected);
         tick = (tick + 1) % (evo->max_tick_per_gen + 2);
     }
     sfRenderWindow_destroy(window);
