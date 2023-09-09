@@ -196,13 +196,13 @@ int main(int argc, char* argv[])
                 if (i_selected >= evo.pop_size / 2)
                     break;
                 void *cell = (void *)((char *)(evo.pop) + i * evo.agent_struct_size);
-                printf("%d\n", my_cell_is_select(cell));
                 if (my_cell_is_select(cell)) {
                     my_matrix_set(&selected, i_selected, 0, i);
                     my_matrix_set(&selected, i_selected, 1, my_cell_get_reward(cell));
                     ++i_selected;
                 }
             }
+            printf("%u\n", i_selected);
             MAT_PRINT(selected);
             ++tick;
         }
@@ -219,6 +219,8 @@ int main(int argc, char* argv[])
     }
 
     free(evo.pop);
+
+    MAT_FREE(selected);
 
     return 0;
 }
