@@ -27,8 +27,8 @@ void my_cell_draw(sfRenderWindow *window, void *cell)
     draw_rectangle(window);
     sfVector2u window_size = sfRenderWindow_getSize(window);
     sfVector2f ratio = {
-        window_size.x / SIZE,
-        window_size.y / SIZE,
+        (window_size.x - RADIUS) / SIZE,
+        (window_size.y - RADIUS) / SIZE,
     };
     my_cell_t *cell_ptr = (my_cell_t *)cell;
     sfVector2f pos = {
