@@ -28,7 +28,6 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
         .y = (mode.height - 2 * RADIUS) / SIZE
     };
     uint32_t tick = 0;
-    uint32_t i_selected = 0;
     MAT_DECLA(selected);
     my_matrix_create(evo->pop_size / 2, 2, 1, &selected);
     MAT_DECLA(unselected);

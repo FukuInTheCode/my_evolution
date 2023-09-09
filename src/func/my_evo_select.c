@@ -3,6 +3,7 @@
 void my_evo_do_selection(my_evo_t *evo, my_matrix_t *selected,\
                                             my_matrix_t *unselected)
 {
+    uint32_t i_selected = 0;
     for (uint32_t i = 0; i < evo->pop_size; ++i) {
         void *cell = (void *)((char *)(evo->pop) + i * evo->agent_struct_size);
         double cell_reward = my_cell_get_reward(cell);
