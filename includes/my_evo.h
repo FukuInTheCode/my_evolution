@@ -5,7 +5,7 @@
 
 typedef bool (*selection_func)(void *);
 typedef double (*reward_func)(void *);
-typedef void (*do_update)(void *);
+typedef void (*do_update)(void *, uint32_t);
 
 typedef struct {
     uint32_t pop_size;

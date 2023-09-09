@@ -47,7 +47,6 @@ int main(int argc, char* argv[])
         cell->color = sfRed;
     }
 
-#if 0
 
     // window creation
 
@@ -61,6 +60,7 @@ int main(int argc, char* argv[])
     };
     sfEvent event;
 
+#if 0
     // window loop
     while (sfRenderWindow_isOpen(window)) {
         // event loop
