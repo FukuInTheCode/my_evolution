@@ -31,3 +31,4 @@ typedef struct {
 
 void my_cell_show(sfRenderWindow *window, void *cell, sfVector2f ratio);
 void my_cell_update(void *pop, uint32_t pop_size);
+bool my_cell_is_select(void *cell_ptr);
