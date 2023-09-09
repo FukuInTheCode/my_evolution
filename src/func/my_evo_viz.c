@@ -41,9 +41,8 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
             my_cell_update(evo->pop, evo->pop_size);
             ++tick;
         } else if (tick == evo->max_tick_per_gen) {
-            // selection
             i_selected = my_evo_do_selection(evo, selected, unselected);
-            printf("%u\n", i_selected);
+            ++tick;
         } else {
             // duplica
             MAT_PRINT((*selected));
