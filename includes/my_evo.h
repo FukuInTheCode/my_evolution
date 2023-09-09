@@ -11,10 +11,11 @@ typedef struct {
     uint32_t pop_size;
     void *pop;
     uint32_t max_tick_per_gen;
-    selection_func is_selected;
     double mutation_chance;
-    reward_func get_reward;
     size_t agent_struct_size;
+    selection_func is_selected;
+    do_tick do_tick;
+    reward_func get_reward;
 } my_evo_t;
 
 #endif
