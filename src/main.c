@@ -8,7 +8,7 @@ double set(double x)
 int main(int argc, char* argv[])
 {
 
-    srand(time(0));
+    srand(69);
     // uint32_t max_reward_id;
     // uint32_t gen_i = 0;
 
@@ -88,6 +88,7 @@ int main(int argc, char* argv[])
                 void *cell = (void *)((char *)(evo.pop) + i * evo.agent_struct_size);
                 double cell_reward = my_cell_get_reward(cell);
                 bool is_selected = my_cell_is_select(cell);
+                printf("Hello\n");
                 if (i_selected && i_selected < evo.pop_size / 2) {
                     my_matrix_set(&selected, i_selected, 0, i);
                     my_matrix_set(&selected, i_selected, 1, cell_reward);
