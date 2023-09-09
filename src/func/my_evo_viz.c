@@ -21,11 +21,11 @@ static void handle_show(my_evo_t *evo, sfRenderWindow *window)
 
 void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
 {
-    sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo", sfDefaultStyle, NULL);
-    sfVector2u window_size = sfRenderWindow_getSize(window);
+    sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo",\
+                                                sfDefaultStyle, NULL);
     sfVector2f ratio = {
-        .x = (window_size.x - 2 * RADIUS) / SIZE,
-        .y = (window_size.y - 2 * RADIUS) / SIZE
+        .x = (mode.width - 2 * RADIUS) / SIZE,
+        .y = (mode.height - 2 * RADIUS) / SIZE
     };
     uint32_t tick = 0;
     uint32_t i_selected = 0;
@@ -37,7 +37,8 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
     while (sfRenderWindow_isOpen(window)) {
         handle_event(window);
         handle_show(evo, window);
-
+        if (evo->do_per_n_gen == 1)
+            tick = my_evo_do_tick(evo, tick, &selected, &unselected);
     }
     sfRenderWindow_destroy(window);
     MAT_FREE(selected);
