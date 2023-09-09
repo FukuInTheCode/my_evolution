@@ -36,4 +36,5 @@ uint32_t my_evo_do_tick(my_evo_t *evo, uint32_t tick,\
         usleep(1000);
         tick = 0;
     }
+    return tick;
 }
