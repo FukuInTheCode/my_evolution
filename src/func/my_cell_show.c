@@ -7,8 +7,8 @@ static draw_rectangle(sfRenderWindow *window, sfVector2f ratio)
     sfRectangleShape_setOutlineThickness(selection_zone, 3);
     sfRectangleShape_setFillColor(selection_zone, sfTransparent);
     sfVector2f zone_vec = {
-        .x = SIZE / 3. * ratio.x,
-        .y = SIZE * ratio.y
+        .x = SIZE / 3. * ratio.x + RADIUS,
+        .y = SIZE * ratio.y + RADIUS
     };
     sfRectangleShape_setSize(selection_zone, zone_vec);
     zone_vec.x += SIZE / 3. * ratio.x;
