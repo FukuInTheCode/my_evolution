@@ -22,4 +22,6 @@ typedef struct {
     show_func show;
 } my_evo_t;
 
+void my_evo_viz(my_evo_t *evo, sfVideoMode mode);
+
 #endif
