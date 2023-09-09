@@ -17,7 +17,7 @@ typedef struct {
     selection_func is_selected;
     do_updates update;
     reward_func get_reward;
-
+    show_func show;
 } my_evo_t;
 
 #endif
