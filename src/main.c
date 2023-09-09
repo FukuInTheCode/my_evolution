@@ -44,6 +44,7 @@ int main(int argc, char* argv[])
         my_nn_create(&(cell->brain));
         cell->atb.name = "atb";
         my_matrix_create(2, 1, 1, &(cell->atb));
+        my_matrix_randint(0, SIZE, 1, &(cell->atb));
         cell->color = sfRed;
     }
 
@@ -60,7 +61,6 @@ int main(int argc, char* argv[])
     };
     sfEvent event;
 
-#if 0
     // window loop
     while (sfRenderWindow_isOpen(window)) {
         // event loop
@@ -68,6 +68,7 @@ int main(int argc, char* argv[])
             if (event.type == sfEvtClosed)
                 sfRenderWindow_close(window);
         }
+#if 0
 
 
         // evolution algo
@@ -181,6 +182,7 @@ int main(int argc, char* argv[])
             pop[max_reward_id].color = sfBlue;
             tick = 0;
         }
+#endif
         // show
         sfRenderWindow_clear(window, sfBlack);
         sfRenderWindow_display(window);
@@ -188,7 +190,6 @@ int main(int argc, char* argv[])
     }
     sfRenderWindow_destroy(window);
 
-#endif
 
     for (uint32_t i = 0; i < evo.pop_size; ++i) {
         my_cell_t *cell = (my_cell_t *)((char *)evo.pop + evo.agent_struct_size * i);
