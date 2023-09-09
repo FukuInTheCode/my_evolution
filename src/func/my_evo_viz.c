@@ -41,17 +41,18 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
             my_cell_update(evo->pop, evo->pop_size);
             ++tick;
         } else if (tick == evo->max_tick_per_gen) {
-            i_selected = my_evo_do_selection(evo, selected, unselected);
+            i_selected = my_evo_do_selection(evo, &selected, &unselected);
             ++tick;
         } else {
             // duplica
-            MAT_PRINT((*selected));
-            MAT_PRINT((*unselected));
+            MAT_PRINT(selected);
+            MAT_PRINT(unselected);
+            my_evo_duplica(evo, &selected, &unselected, i_selected);
             // reset
             i_selected = 0;
-            my_matrix_setall(unselected, 0);
-            my_matrix_setall(selected, 0);
-            usleep(1000);
+            my_matrix_setall(&unselected, 0);
+            my_matrix_setall(&selected, 0);
+            tick = 0;
         }
     }
     sfRenderWindow_destroy(window);
