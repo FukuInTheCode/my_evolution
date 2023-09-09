@@ -15,7 +15,7 @@ uint32_t my_evo_do_tick(my_evo_t *evo, uint32_t tick,\
         // duplica
         for (uint32_t i = 0; i < evo->pop_size - i_selected; ++i) {
             my_cell_t *cell_child = (my_cell_t *)((char *)(evo->pop) + (int)(unselected->arr[i][0]) * evo->agent_struct_size);
-            my_cell_t *cell_parent = (my_cell_t *)((char *)(evo->pop) + (int)(selected.arr[i % i_selected][0]) * evo->agent_struct_size);
+            my_cell_t *cell_parent = (my_cell_t *)((char *)(evo->pop) + (int)(selected->arr[i % i_selected][0]) * evo->agent_struct_size);
             double *arr = malloc(my_nn_get_n_params(&(cell_parent->brain)) * sizeof(double));
             my_nn_to_array(&(cell_parent->brain), &arr);
             for (uint32_t j = 0; j < my_nn_get_n_params(&(cell_parent->brain)); ++j) {
