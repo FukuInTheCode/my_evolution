@@ -27,13 +27,7 @@ int main(int argc, char* argv[])
         exit(1);
     }
     // used var
-    uint32_t tick = 0;
-    uint32_t i_selected = 0;
-    MAT_DECLA(selected);
-    my_matrix_create(evo.pop_size / 2, 2, 1, &selected);
-    MAT_DECLA(unselected);
-    my_matrix_create(evo.pop_size, 1, 1, &unselected);
-    uint32_t gen_i = 0;
+
     // population creattion (main)
 
     uint32_t dims[] = {2, 3, 2};
@@ -52,7 +46,9 @@ int main(int argc, char* argv[])
         cell->color = sfRed;
     }
 
-    // window creatio
+    sfVideoMode mode = {1500, 1500, 32};
+    my_evo_viz(&evo, mode);
+
 
 
     for (uint32_t i = 0; i < evo.pop_size; ++i) {

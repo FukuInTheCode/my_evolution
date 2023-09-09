@@ -10,6 +10,13 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
         .y = (window_size.y - 2 * RADIUS) / SIZE
     };
     sfEvent event;
+    uint32_t tick = 0;
+    uint32_t i_selected = 0;
+    MAT_DECLA(selected);
+    my_matrix_create(evo->pop_size / 2, 2, 1, &selected);
+    MAT_DECLA(unselected);
+    my_matrix_create(evo->pop_size, 1, 1, &unselected);
+    uint32_t gen_i = 0;
     while (sfRenderWindow_isOpen(window)) {
         while (sfRenderWindow_pollEvent(window, &event)) {
             if (event.type == sfEvtClosed)
