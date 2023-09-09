@@ -13,37 +13,42 @@ double set(double x)
 
 int main(int argc, char* argv[])
 {
-    uint32_t max_tick = 100;
-    uint32_t tick = 0;
+
     srand(time(0));
+    // used var
+    // uint32_t tick = 0;
 
-    double mutation_chance = 0.3;
+    // uint32_t selected_id[pop_size / 2];
+    // double selected_reward[pop_size / 2];
+    // uint32_t max_reward_id;
+    // uint32_t gen_i = 0;
 
-    uint32_t pop_size = 100;
+    // my_evo_t
 
-    uint32_t selected_id[pop_size / 2];
-    double selected_reward[pop_size / 2];
-    uint32_t max_reward_id;
+    my_evo_t evo = {
+        .pop_size = 100,
+        .max_tick_per_gen = 100,
+        .mutation_chance = 0.3
+    };
+    evo.pop = malloc(sizeof(my_cell_t) * evo.pop_size);
 
-    my_cell_t pop[pop_size];
+    // population creattion (main)
 
     uint32_t dims[] = {2, 3, 2};
-    for (uint32_t i = 0; i < pop_size; ++i) {
-        pop[i].brain.size = 3;
-        pop[i].brain.name = "brain";
-        pop[i].brain.dims = dims;
-        my_nn_create(&pop[i].brain);
-        pop[i].brain.acti_type = base_type;
-        pop[i].brain.funcs.af = my_nn_sin;
-        pop[i].brain.funcs.grad_af = my_nn_sin_grad;
-        pop[i].atb.m = 0;
-        pop[i].atb.n = 0;
-        pop[i].atb.name = "atb";
-        my_matrix_create(2, 1, 1, &pop[i].atb);
-        my_matrix_set(&(pop[i].atb), 0, 0, my_randint(0, SIZE));
-        my_matrix_set(&(pop[i].atb), 1, 0, my_randint(0, SIZE));
-        pop[i].color = C_COLOR;
+    for (uint32_t i = 0; i < evo.pop_size; ++i) {
+        my_cell_t *cell = (my_cell_t *)((char *)evo.pop + sizeof(my_cell_t) * i);
+        cell->brain.dims = dims;
+        cell->brain.size = 3;
+        cell->brain.name = "cell";
+        my_nn_create(&(cell->brain));
+        cell->atb.name = "atb";
+        my_matrix_create(2, 1, 1, &(cell->atb));
+        cell->color = sfRed;
     }
+
+#if 0
+
+    // window creation
 
     sfVideoMode mode = {1500, 1500, 32};
     sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo", sfDefaultStyle, NULL);
@@ -54,21 +59,26 @@ int main(int argc, char* argv[])
         .y = (window_size.y - 2 * RADIUS) / SIZE
     };
     sfEvent event;
-    uint32_t gen_i = 0;
+
+    // window loop
     while (sfRenderWindow_isOpen(window)) {
+        // event loop
         while (sfRenderWindow_pollEvent(window, &event)) {
             if (event.type == sfEvtClosed)
                 sfRenderWindow_close(window);
         }
 
+
+        // evolution algo
         if (tick < max_tick) {
+            // do a tick
             for (uint32_t i = 0; i < pop_size; ++i) {
                 MAT_DECLA(datb);
-                my_nn_predict(&(pop[i].brain), &(pop[i].atb), &datb);
+                my_nn_predict(&(pop[i]->brain), &(pop[i]->atb), &datb);
                 datb.arr[0][0] = set(datb.arr[0][0]);
                 datb.arr[1][0] = set(datb.arr[1][0]);
                 MAT_DECLA(new_atb);
-                my_matrix_add(&new_atb, 2, &(pop[i].atb), &datb);
+                my_matrix_add(&new_atb, 2, &(pop[i]->atb), &datb);
                 bool can_move = true;
                 if (new_atb.arr[0][0] < 0)
                     can_move = false;
@@ -83,29 +93,30 @@ int main(int argc, char* argv[])
                         can_move = false;
                 }
                 if (can_move)
-                    my_matrix_copy(&new_atb, &(pop[i].atb));
+                    my_matrix_copy(&new_atb, &(pop[i]->atb));
                 my_matrix_free(2, &datb, &new_atb);
             }
             ++tick;
+        // selection algo
         } else if (tick == max_tick) {
             double max_reward = -1.;
             uint32_t unselected_id[pop_size / 2];
             uint32_t unselect_i = 0;
             double total_reward = 0;
             for (uint32_t i = 0; i < pop_size; ++i) {
-                pop[i].reward = 1. / (sqrt(pow(pop[i].atb.arr[0][0] - SIZE / 2., 2) + pow(pop[i].atb.arr[1][0] - SIZE / 2., 2)) + 1);
-                total_reward += pop[i].reward;
-                if (max_reward < pop[i].reward) {
-                    max_reward = pop[i].reward;
+                pop[i]->reward = 1. / (sqrt(pow(pop[i]->atb.arr[0][0] - SIZE / 2., 2) + pow(pop[i]->atb.arr[1][0] - SIZE / 2., 2)) + 1);
+                total_reward += pop[i]->reward;
+                if (max_reward < pop[i]->reward) {
+                    max_reward = pop[i]->reward;
                     max_reward_id = i;
                 }
                 if (i < pop_size / 2) {
                     selected_id[i] = i;
-                    selected_reward[i] = pop[i].reward;
+                    selected_reward[i] = pop[i]->reward;
                     continue;
                 }
                 double min_selected_reward = my_min(selected_reward, pop_size / 2);
-                if (min_selected_reward >= pop[i].reward) {
+                if (min_selected_reward >= pop[i]->reward) {
                     unselected_id[unselect_i++] = i;
                     continue;
                 }
@@ -116,7 +127,7 @@ int main(int argc, char* argv[])
                 }
                 unselected_id[unselect_i++] = selected_id[j];
                 selected_id[j] = i;
-                selected_reward[j] = pop[i].reward;
+                selected_reward[j] = pop[i]->reward;
             }
 
 
@@ -125,7 +136,7 @@ int main(int argc, char* argv[])
             for (uint32_t i = 0; i < pop_size / 2;  i += 2) {
                 uint32_t crosspoint = my_randint(0, n_params);
                 double *parent1 = malloc(sizeof(double) * n_params);
-                my_nn_to_array(&(pop[i].brain), &parent1);
+                my_nn_to_array(&(pop[i]->brain), &parent1);
                 double *parent2 = malloc(sizeof(double) * n_params);
                 my_nn_to_array(&(pop[i + 1].brain), &parent2);
                 double *child1 = malloc(sizeof(double) * n_params);
@@ -159,23 +170,25 @@ int main(int argc, char* argv[])
             for (uint32_t i = 0; i < pop_size / 2; ++i)
                 pop[unselected_id[i]].color = sfCyan;
             pop[max_reward_id].color = sfBlue;
+        // reset
         } else {
             usleep(1000000);
             for (uint32_t i = 0; i < pop_size; ++i){
-                my_matrix_randint(0, SIZE, 1, &(pop[i].atb));
-                pop[i].color = sfRed;
+                my_matrix_randint(0, SIZE, 1, &(pop[i]->atb));
+                pop[i]->color = sfRed;
             }
             pop[max_reward_id].color = sfBlue;
             tick = 0;
         }
+        // show
         sfRenderWindow_clear(window, sfBlack);
         for (uint32_t i = 0; i < pop_size; ++i) {
             sfVector2f pos = {
-                .x = pop[i].atb.arr[0][0] * ratio.x,
-                .y = pop[i].atb.arr[1][0] * ratio.y
+                .x = pop[i]->atb.arr[0][0] * ratio.x,
+                .y = pop[i]->atb.arr[1][0] * ratio.y
             };
             sfCircleShape *pt =sfCircleShape_create();
-            sfCircleShape_setFillColor(pt, pop[i].color);
+            sfCircleShape_setFillColor(pt, pop[i]->color);
             sfCircleShape_setPosition(pt, pos);
             sfCircleShape_setRadius(pt, RADIUS);
             sfRenderWindow_drawCircleShape(window, pt, NULL);
@@ -183,6 +196,17 @@ int main(int argc, char* argv[])
         sfRenderWindow_display(window);
     }
     sfRenderWindow_destroy(window);
+
+#endif
+
+    for (uint32_t i = 0; i < evo.pop_size; ++i) {
+        my_cell_t *cell = (my_cell_t *)((char *)evo.pop + sizeof(my_cell_t) * i);
+
+        my_nn_free(&(cell->brain));
+        MAT_FREE((cell->atb));
+    }
+
+    free(evo.pop);
 
     return 0;
 }
