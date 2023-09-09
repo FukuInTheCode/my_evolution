@@ -204,13 +204,20 @@ int main(int argc, char* argv[])
                     my_matrix_set(&unselected, i - i_selected, 0, i);
                 }
             }
-            printf("%u\n", i_selected);
+            // printf("%u\n", i_selected);
             MAT_PRINT(selected);
             MAT_PRINT(unselected);
             ++tick;
         } else {
-            for (uint32_t i = 0; i < i_selected; ++i) {
-
+            for (uint32_t i = 0; i < evo.pop_size - i_selected; ++i) {
+                my_cell_t *cell_child = (my_cell_t *)((char *)evo.pop + unselected.arr[i][0] * evo.agent_struct_size);
+                my_cell_t *cell_parent = (my_cell_t *)((char *)evo.pop + selected.arr[i % i_selected][0] * evo.agent_struct_size);
+                double *arr = malloc(my_nn_get_n_params(&(cell_parent->brain)) * sizeof(double));
+                my_nn_to_array(&(cell_parent->brain), &arr);
+                for (uint32_t j = 0; j < my_nn_get_n_params(&(cell_parent->brain)); ++j) {
+                    if (my_randfloat(0, 1) <= evo.mutation_chance)
+                        arr[j] += my_randfloat(-1 * evo.mutation_range, evo.mutation_range);
+                }
             }
         }
 
