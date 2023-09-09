@@ -8,7 +8,7 @@ void my_cell_show(sfRenderWindow *window, void *cell, sfVector2f ratio)
         .x = SIZE / 3 * ratio.x,
         .y = SIZE * ratio.y
     };
-    sfRectangleShape_setSize(selction_zone, zone_vec);
+    sfRectangleShape_setSize(selection_zone, zone_vec);
     zone_vec.x += SIZE / 3 * ratio.x;
     zone_vec.y = 0;
     sfRectangleShape_setPosition(selection_zone, zone_vec);
