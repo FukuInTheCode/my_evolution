@@ -180,7 +180,7 @@ int main(int argc, char* argv[])
         // show
         sfRenderWindow_clear(window, sfBlack);
         for (uint32_t i = 0; i < evo.pop_size; ++i) {
-            void *cell = (void *)((char *)pop + i * evo.agent_struct_size);
+            void *cell = (void *)((char *)(evo.pop) + i * evo.agent_struct_size);
             my_cell_show(window, cell, ratio);
         }
         sfRenderWindow_display(window);
