@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     // my_evo_t
 
     my_evo_t evo = {
-        .pop_size = 12,
+        .pop_size = 16,
         .max_tick_per_gen = SIZE / 3. * 2.,
         .mutation_chance = 0.3,
         .mutation_range = 1.,
@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
     my_matrix_create(evo.pop_size / 2, 2, 1, &selected);
     MAT_DECLA(unselected);
     my_matrix_create(evo.pop_size, 1, 1, &unselected);
+    uint32_t gen_i = 0;
     // population creattion (main)
 
     uint32_t dims[] = {2, 3, 2};
@@ -47,7 +48,6 @@ int main(int argc, char* argv[])
         cell->atb.name = "atb";
         cell->color = sfRed;
     }
-
 
     // window creation
 
@@ -88,22 +88,23 @@ int main(int argc, char* argv[])
                 void *cell = (void *)((char *)(evo.pop) + i * evo.agent_struct_size);
                 double cell_reward = my_cell_get_reward(cell);
                 bool is_selected = my_cell_is_select(cell);
-                if (is_selected && i_selected < evo.pop_size / 2) {
+                if (i_selected && i_selected < evo.pop_size / 2) {
                     my_matrix_set(&selected, i_selected, 0, i);
                     my_matrix_set(&selected, i_selected, 1, cell_reward);
-                    ++i_selected;
-                } else if (is_selected) {
-                    double min_reward = my_matrix_mincol(&selected, 1);
-                    if (min_reward < cell_reward) {
-                        uint32_t min_i = my_matrix_find_row_index(&selected, 1, min_reward);
-                        my_matrix_set(&unselected, i - i_selected, 0, min_i);
+                    i_selected++;
+                    continue;
+                }
+                if (i_selected && i_selected >= evo.pop_size / 2) {
+                    double min_selected_reward = my_matrix_mincol(&selected, 1);
+                    if (cell_reward > min_selected_reward) {
+                        uint32_t min_i = my_matrix_find_row_index(&selected, 1, min_selected_reward);
+                        my_matrix_set(&unselected, i - i_selected, 0, selected.arr[min_i][0]);
                         my_matrix_set(&selected, min_i, 0, i);
                         my_matrix_set(&selected, min_i, 1, cell_reward);
                         continue;
                     }
-                    my_matrix_set(&unselected, i - i_selected, 0, i);
-                } else
-                    my_matrix_set(&unselected, i - i_selected, 0, i);
+                }
+                my_matrix_set(&unselected, i - i_selected, 0, i);
             }
             printf("%u\n", i_selected);
             MAT_PRINT(selected);
@@ -129,8 +130,11 @@ int main(int argc, char* argv[])
             }
             // reset
             i_selected = 0;
+            my_matrix_setall(&unselected, 0);
+            my_matrix_setall(&selected, 0);
             usleep(1000);
             tick = 0;
+            gen_i++;
         }
 
     }
