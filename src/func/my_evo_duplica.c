@@ -1,7 +1,7 @@
 #include "../../includes/my.h"
 
 void my_evo_duplica(my_evo_t *evo, my_matrix_t *selected, \
-                                        my_matrix_t *unselected)
+                                        my_matrix_t *unselected, uint32_t i_selected)
 {
     for (uint32_t i = 0; i < evo->pop_size - i_selected; ++i) {
         // printf("%zu, %i, %zu\n", evo->pop, (int)unselected->arr[i][0], evo->agent_struct_size);
