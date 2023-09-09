@@ -202,6 +202,7 @@ int main(int argc, char* argv[])
                     ++i_selected;
                 }
             }
+            MAT_PRINT(selected);
         }
 
     }
