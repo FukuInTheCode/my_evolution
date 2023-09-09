@@ -3,13 +3,15 @@
 void my_cell_show(sfRenderWindow *window, void *cell, sfVector2f ratio)
 {
     sfRectangleShape *selection_zone = sfRectangleShape_create();
-    sfRectangleShape_setFillColor(selection_zone, sfWhite);
+    sfRectangleShape_setOutlineColor(selection_zone, sfWhite);
+    sfRectangleShape_setOutlineThickness(selection_zone, 3);
+    sfRectangleShape_setFillColor(selection_zone, sfTransparent);
     sfVector2f zone_vec = {
-        .x = SIZE / 3 * ratio.x,
+        .x = SIZE / 3. * ratio.x,
         .y = SIZE * ratio.y
     };
     sfRectangleShape_setSize(selection_zone, zone_vec);
-    zone_vec.x += SIZE / 3 * ratio.x;
+    zone_vec.x += SIZE / 3. * ratio.x;
     zone_vec.y = 0;
     sfRectangleShape_setPosition(selection_zone, zone_vec);
     sfRenderWindow_drawRectangleShape(window, selection_zone, NULL);
