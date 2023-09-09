@@ -27,8 +27,8 @@ void my_cell_draw(sfRenderWindow *window, void *cell)
     draw_rectangle(window, ratio);
     my_cell_t *cell_ptr = (my_cell_t *)cell;
     sfVector2f pos = {
-        .x = cell_ptr->atb.arr[0][0] * ratio.x - RADIUS,
-        .y = cell_ptr->atb.arr[1][0] * ratio.y - RADIUS
+        .x = cell_ptr->atb.arr[0][0] * ratio.x,
+        .y = cell_ptr->atb.arr[1][0] * ratio.y
     };
     sfCircleShape *pt =sfCircleShape_create();
     sfCircleShape_setFillColor(pt, cell_ptr->color);
