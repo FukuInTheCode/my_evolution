@@ -10,7 +10,7 @@ typedef void (*do_update)(void *, uint32_t);
 typedef void (*show_func)(sfRenderWindow *, void *, sfVector2f);
 
 typedef struct {
-    uint32_t pop_size;
+    size_t pop_size;
     void *pop;
     uint32_t max_tick_per_gen;
     double mutation_chance;

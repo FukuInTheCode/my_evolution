@@ -15,14 +15,17 @@ int main(int argc, char* argv[])
     // my_evo_t
 
     my_evo_t evo = {
-        .pop_size = 16,
+        .pop_size = 100,
         .max_tick_per_gen = SIZE / 3. * 2.,
         .mutation_chance = 0.3,
         .mutation_range = 1.,
         .agent_struct_size = sizeof(my_cell_t)
     };
-    evo.pop = malloc(evo.agent_struct_size * evo.pop_size);
-
+    evo.pop = calloc(evo.pop_size, evo.agent_struct_size);
+    if (evo.pop == NULL) {
+        fprintf(stderr, "Alloc failed!");
+        exit(1);
+    }
     // used var
     uint32_t tick = 0;
     uint32_t i_selected = 0;
@@ -34,7 +37,7 @@ int main(int argc, char* argv[])
     // population creattion (main)
 
     uint32_t dims[] = {2, 3, 2};
-    for (uint32_t i = 0; i < evo.pop_size; ++i) {
+    for (size_t i = 0; i < evo.pop_size; ++i) {
         my_cell_t *cell = (my_cell_t *)((char *)(evo.pop) + evo.agent_struct_size * i);
         cell->brain.dims = dims;
         cell->brain.size = 3;

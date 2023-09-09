@@ -26,7 +26,7 @@ typedef struct {
 
 #define C_COLOR sfRed
 
-#define SIZE 51.
+#define SIZE 512.
 
 void my_cell_show(sfRenderWindow *window, void *cell, sfVector2f ratio);
 void my_cell_update(void *pop, uint32_t pop_size);
