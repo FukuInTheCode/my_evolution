@@ -16,6 +16,7 @@ typedef struct {
     double mutation_chance;
     double mutation_range;
     size_t agent_struct_size;
+    uint32_t do_per_n_gen;
     selection_func is_selected;
     do_update update;
     reward_func get_reward;
