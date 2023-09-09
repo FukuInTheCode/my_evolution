@@ -60,8 +60,5 @@ int main(int argc, char* argv[])
 
     free(evo.pop);
 
-    MAT_FREE(selected);
-    MAT_FREE(unselected);
-
     return 0;
 }

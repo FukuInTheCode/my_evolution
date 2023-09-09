@@ -90,4 +90,7 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
 
     }
     sfRenderWindow_destroy(window);
+    
+    MAT_FREE(selected);
+    MAT_FREE(unselected);
 }
