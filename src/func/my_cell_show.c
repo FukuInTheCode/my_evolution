@@ -1,7 +1,12 @@
 #include "../../includes/my.h"
 
-void my_cell_show(sfRenderWindow *window, void *cell, sfVector2f ratio)
+static draw_rectangle(sfRenderWindow *window)
 {
+    sfVector2u window_size = sfRenderWindow_getSize(window);
+    sfVector2f ratio = {
+        window_size.x / SIZE,
+        window_size.y / SIZE,
+    };
     sfRectangleShape *selection_zone = sfRectangleShape_create();
     sfRectangleShape_setOutlineColor(selection_zone, sfWhite);
     sfRectangleShape_setOutlineThickness(selection_zone, 3);
@@ -15,6 +20,11 @@ void my_cell_show(sfRenderWindow *window, void *cell, sfVector2f ratio)
     zone_vec.y = 0;
     sfRectangleShape_setPosition(selection_zone, zone_vec);
     sfRenderWindow_drawRectangleShape(window, selection_zone, NULL);
+}
+
+void my_cell_show(sfRenderWindow *window, void *cell, sfVector2f ratio)
+{
+    draw_rectangle(window);
     my_cell_t *cell_ptr = (my_cell_t *)cell;
     sfVector2f pos = {
         .x = cell_ptr->atb.arr[0][0] * ratio.x,
