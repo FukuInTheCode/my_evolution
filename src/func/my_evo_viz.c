@@ -37,6 +37,7 @@ static uint32_t do_gen(my_evo_t *evo, my_matrix_t **s_matrices,\
         my_matrix_setall(&((*s_matrices)[1]), 0);
         my_matrix_setall(&((*s_matrices)[0]), 0);
     }
+    return i_selected;
 }
 
 
