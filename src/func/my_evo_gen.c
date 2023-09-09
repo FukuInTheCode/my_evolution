@@ -35,6 +35,5 @@ uint32_t my_evo_do_tick(my_evo_t *evo, uint32_t tick,\
         my_matrix_setall(selected, 0);
         usleep(1000);
         tick = 0;
-        gen_i++;
     }
 }
