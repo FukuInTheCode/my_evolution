@@ -6,7 +6,7 @@
 typedef bool (*selection_func)(void *);
 typedef double (*reward_func)(void *);
 typedef void (*do_update)(void *, uint32_t);
-typedef void (*show_func)(sfRenderWindow *, void *);
+typedef void (*show_func)(sfRenderWindow *, void *, sfVector2f);
 
 typedef struct {
     uint32_t pop_size;

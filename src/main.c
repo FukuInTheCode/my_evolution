@@ -183,18 +183,8 @@ int main(int argc, char* argv[])
         }
         // show
         sfRenderWindow_clear(window, sfBlack);
-        for (uint32_t i = 0; i < pop_size; ++i) {
-            sfVector2f pos = {
-                .x = pop[i]->atb.arr[0][0] * ratio.x,
-                .y = pop[i]->atb.arr[1][0] * ratio.y
-            };
-            sfCircleShape *pt =sfCircleShape_create();
-            sfCircleShape_setFillColor(pt, pop[i]->color);
-            sfCircleShape_setPosition(pt, pos);
-            sfCircleShape_setRadius(pt, RADIUS);
-            sfRenderWindow_drawCircleShape(window, pt, NULL);
-        }
         sfRenderWindow_display(window);
+
     }
     sfRenderWindow_destroy(window);
 
