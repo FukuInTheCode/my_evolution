@@ -2,6 +2,7 @@
 #define MY_EVO_H
 
 #include "my_neuralnetwork.h"
+#include "SFML/Graphics.h"
 
 typedef bool (*selection_func)(void *);
 typedef double (*reward_func)(void *);
