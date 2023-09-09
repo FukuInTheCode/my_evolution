@@ -34,6 +34,7 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
     MAT_DECLA(unselected);
     my_matrix_create(evo->pop_size, 1, 1, &unselected);
     uint32_t gen_i = 0;
+    uint32_t i_selected = 0;
     while (sfRenderWindow_isOpen(window)) {
         handle_event(window);
         handle_show(evo, window);
@@ -47,7 +48,7 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
             my_matrix_setall(&unselected, 0);
             my_matrix_setall(&selected, 0);
         }
-        tick = tick % (evo->max_tick_per_gen + 1);
+        tick = (tick + 1) % (evo->max_tick_per_gen + 2);
     }
     sfRenderWindow_destroy(window);
     my_matrix_free(2, &unselected, &selected);
