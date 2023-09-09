@@ -6,7 +6,10 @@
         "test.h": "c",
         "adojet.h": "c",
         "stdarg.h": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "my_evo.h": "c",
+        "my_neuralnetwork.h": "c",
+        "my_matrix.h": "c"
     },
     "epilinter.tokenizer_address": "ws://54.36.183.139:8081"
 }
