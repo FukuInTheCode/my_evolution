@@ -18,7 +18,7 @@ uint32_t my_evo_do_selection(my_evo_t *evo, my_matrix_t *selected,\
             double min_selected_reward = my_matrix_mincol(selected, 1);
             if (cell_reward > min_selected_reward) {
                 uint32_t min_i = my_matrix_find_row_index(selected, 1, min_selected_reward);
-                my_matrix_set(unselected, i - i_selected, 0, selected.arr[min_i][0]);
+                my_matrix_set(unselected, i - i_selected, 0, selected->arr[min_i][0]);
                 my_matrix_set(selected, min_i, 0, i);
                 my_matrix_set(selected, min_i, 1, cell_reward);
                 continue;
