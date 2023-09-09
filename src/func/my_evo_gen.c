@@ -1,6 +1,7 @@
 #include "../../includes/my.h"
 
-uint32_t my_evo_do_tick(my_evo_t *evo, uint32_t tick)
+uint32_t my_evo_do_tick(my_evo_t *evo, uint32_t tick,\
+                my_matrix_t *selected, my_matrix_t *unselected)
 {
     if (tick < evo->max_tick_per_gen) {
         my_cell_update(evo->pop, evo->pop_size);
