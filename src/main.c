@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 
     my_evo_t evo = {
         .pop_size = 100,
-        .max_tick_per_gen = 100,
+        .max_tick_per_gen = SIZE / 3 * 2,
         .mutation_chance = 0.3,
         .mutation_range = 1.,
         .agent_struct_size = sizeof(my_cell_t)
@@ -86,17 +86,25 @@ int main(int argc, char* argv[])
             // selection
             for (uint32_t i = 0; i < evo.pop_size; ++i) {
                 void *cell = (void *)((char *)(evo.pop) + i * evo.agent_struct_size);
+                double cell_reward = my_cell_get_reward(cell);
                 if (my_cell_is_select(cell) && i_selected < evo.pop_size / 2) {
                     my_matrix_set(&selected, i_selected, 0, i);
-                    my_matrix_set(&selected, i_selected, 1, my_cell_get_reward(cell));
+                    my_matrix_set(&selected, i_selected, 1, cell_reward);
                     ++i_selected;
                 } else {
-                    my_matrix_set(&unselected, i - i_selected, 0, i);
+                    my_cell_t *cell_ptr = (my_cell_t *)cell;
+                    uint32_t min = my_matrix_mincol(&(cell_ptr->atb), 1);
+                    if (cell_reward > min) {
+                        uint32_t min_i = my_matrix_find_row_index(&(cell_ptr->atb), 1, min);
+                        my_matrix_set(&selected, min_i, 0, i);
+                        my_matrix_set(&selected, min_i, 1, cell_reward);
+                    } else
+                        my_matrix_set(&unselected, i - i_selected, 0, i);
                 }
             }
-            // printf("%u\n", i_selected);
-            MAT_PRINT(selected);
-            MAT_PRINT(unselected);
+            printf("%u\n", i_selected);
+            // MAT_PRINT(selected);
+            // MAT_PRINT(unselected);
             ++tick;
         } else {
             // duplica
@@ -111,6 +119,7 @@ int main(int argc, char* argv[])
                 }
                 my_nn_from_array(&(cell_child->brain), arr);
                 free(arr);
+                // reset
                 my_matrix_randint(0, SIZE, 2, &(cell_child->atb), &(cell_parent->atb));
                 cell_parent->color = sfBlue;
                 cell_child->color = sfRed;
@@ -118,6 +127,7 @@ int main(int argc, char* argv[])
             // reset
             i_selected = 0;
             usleep(1000);
+            tick = 0;
         }
 
     }
