@@ -5,6 +5,7 @@
 
 typedef bool (*selection_func)(void *);
 typedef double (*reward_func)(void *);
+typedef void (*do_tick)(void *);
 
 typedef struct {
     uint32_t pop_size;
@@ -13,6 +14,7 @@ typedef struct {
     selection_func is_selected;
     double mutation_chance;
     reward_func get_reward;
+    size_t agent_struct_size;
 } my_evo_t;
 
 #endif

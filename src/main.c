@@ -28,15 +28,16 @@ int main(int argc, char* argv[])
     my_evo_t evo = {
         .pop_size = 100,
         .max_tick_per_gen = 100,
-        .mutation_chance = 0.3
+        .mutation_chance = 0.3,
+        .agent_struct_size = sizeof(my_cell_t)
     };
-    evo.pop = malloc(sizeof(my_cell_t) * evo.pop_size);
+    evo.pop = malloc(evo.agent_struct_size * evo.pop_size);
 
     // population creattion (main)
 
     uint32_t dims[] = {2, 3, 2};
     for (uint32_t i = 0; i < evo.pop_size; ++i) {
-        my_cell_t *cell = (my_cell_t *)((char *)evo.pop + sizeof(my_cell_t) * i);
+        my_cell_t *cell = (my_cell_t *)((char *)evo.pop + evo.agent_struct_size * i);
         cell->brain.dims = dims;
         cell->brain.size = 3;
         cell->brain.name = "cell";
@@ -200,7 +201,7 @@ int main(int argc, char* argv[])
 #endif
 
     for (uint32_t i = 0; i < evo.pop_size; ++i) {
-        my_cell_t *cell = (my_cell_t *)((char *)evo.pop + sizeof(my_cell_t) * i);
+        my_cell_t *cell = (my_cell_t *)((char *)evo.pop + evo.agent_struct_size * i);
 
         my_nn_free(&(cell->brain));
         MAT_FREE((cell->atb));
