@@ -28,7 +28,7 @@ typedef struct {
 
 #define SIZE 512.
 
-void my_cell_show(sfRenderWindow *window, void *cell, sfVector2f ratio);
+void my_cell_draw(sfRenderWindow *window, void *cell);
 void my_cell_update(void *pop, uint32_t pop_size);
 bool my_cell_is_select(void *cell_ptr);
 double my_cell_get_reward(void *cell_ptr);

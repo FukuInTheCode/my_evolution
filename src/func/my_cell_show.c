@@ -22,7 +22,7 @@ static draw_rectangle(sfRenderWindow *window)
     sfRenderWindow_drawRectangleShape(window, selection_zone, NULL);
 }
 
-void my_cell_show(sfRenderWindow *window, void *cell)
+void my_cell_draw(sfRenderWindow *window, void *cell)
 {
     draw_rectangle(window);
     sfVector2u window_size = sfRenderWindow_getSize(window);
