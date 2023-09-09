@@ -1,6 +1,6 @@
 #include "../../includes/my.h"
 
-void my_evo_do_selection(my_evo_t *evo, my_matrix_t *selected,\
+uint32_t my_evo_do_selection(my_evo_t *evo, my_matrix_t *selected,\
                                             my_matrix_t *unselected)
 {
     uint32_t i_selected = 0;
@@ -26,4 +26,5 @@ void my_evo_do_selection(my_evo_t *evo, my_matrix_t *selected,\
         }
         my_matrix_set(unselected, i - i_selected, 0, i);
     }
+    return i_selected;
 }
