@@ -30,7 +30,7 @@ static uint32_t do_gen(my_evo_t *evo, my_matrix_t **s_matrices,\
     if (tick < evo->max_tick_per_gen) {
         my_cell_update(evo->pop, evo->pop_size);
     } else if (tick == evo->max_tick_per_gen) {
-        i_selected = my_evo_do_selection(evo, &((*s_matrices)[0]), &(s_matrices[1]));
+        i_selected = my_evo_do_selection(evo, &((*s_matrices)[0]), &((*s_matrices)[1]));
     } else {
         my_evo_duplica(evo, &((*s_matrices)[0]), &((*s_matrices)[1]), i_selected);
         i_selected = 0;
