@@ -21,14 +21,14 @@ void my_cell_draw(sfRenderWindow *window, void *cell)
 {
     sfVector2u window_size = sfRenderWindow_getSize(window);
     sfVector2f ratio = {
-        (window_size.x - RADIUS) / SIZE,
-        (window_size.y - RADIUS) / SIZE,
+        (window_size.x - RADIUS * 2) / SIZE,
+        (window_size.y - RADIUS * 2) / SIZE,
     };
     draw_rectangle(window, ratio);
     my_cell_t *cell_ptr = (my_cell_t *)cell;
     sfVector2f pos = {
-        .x = cell_ptr->atb.arr[0][0] * ratio.x,
-        .y = cell_ptr->atb.arr[1][0] * ratio.y
+        .x = cell_ptr->atb.arr[0][0] * ratio.x - RADIUS,
+        .y = cell_ptr->atb.arr[1][0] * ratio.y - RADIUS
     };
     sfCircleShape *pt =sfCircleShape_create();
     sfCircleShape_setFillColor(pt, cell_ptr->color);
