@@ -23,6 +23,7 @@ typedef struct {
 } my_evo_t;
 
 void my_evo_viz(my_evo_t *evo, sfVideoMode mode);
-uint32_t my_evo_do_tick(my_evo_t *evo, uint32_t tick);
+uint32_t my_evo_do_tick(my_evo_t *evo, uint32_t tick,\
+                my_matrix_t *selected, my_matrix_t *unselected);
 
 #endif
