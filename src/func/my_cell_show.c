@@ -22,9 +22,14 @@ static draw_rectangle(sfRenderWindow *window)
     sfRenderWindow_drawRectangleShape(window, selection_zone, NULL);
 }
 
-void my_cell_show(sfRenderWindow *window, void *cell, sfVector2f ratio)
+void my_cell_show(sfRenderWindow *window, void *cell)
 {
     draw_rectangle(window);
+    sfVector2u window_size = sfRenderWindow_getSize(window);
+    sfVector2f ratio = {
+        window_size.x / SIZE,
+        window_size.y / SIZE,
+    };
     my_cell_t *cell_ptr = (my_cell_t *)cell;
     sfVector2f pos = {
         .x = cell_ptr->atb.arr[0][0] * ratio.x,
