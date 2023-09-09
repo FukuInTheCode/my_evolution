@@ -22,7 +22,6 @@ static void handle_show(my_evo_t *evo, sfRenderWindow *window)
 void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
 {
     sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo", sfDefaultStyle, NULL);
-
     sfVector2u window_size = sfRenderWindow_getSize(window);
     sfVector2f ratio = {
         .x = (window_size.x - 2 * RADIUS) / SIZE,
@@ -39,10 +38,8 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
         handle_event(window);
         handle_show(evo, window);
 
-
     }
     sfRenderWindow_destroy(window);
-    
     MAT_FREE(selected);
     MAT_FREE(unselected);
 }
