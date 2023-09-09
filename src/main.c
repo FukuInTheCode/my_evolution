@@ -177,6 +177,7 @@ int main(int argc, char* argv[])
             tick = 0;
         }
 #endif
+        my_cell_update(evo.pop, evo.pop_size);
         // show
         sfRenderWindow_clear(window, sfBlack);
         for (uint32_t i = 0; i < evo.pop_size; ++i) {
