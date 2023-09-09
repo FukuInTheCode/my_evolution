@@ -16,7 +16,7 @@ typedef struct {
     double mutation_chance;
     size_t agent_struct_size;
     selection_func is_selected;
-    do_updates update;
+    do_update update;
     reward_func get_reward;
     show_func show;
 } my_evo_t;
