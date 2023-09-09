@@ -9,11 +9,6 @@ int main(int argc, char* argv[])
 {
 
     srand(time(0));
-    // used var
-    // uint32_t tick = 0;
-
-    // uint32_t selected_id[pop_size / 2];
-    // double selected_reward[pop_size / 2];
     // uint32_t max_reward_id;
     // uint32_t gen_i = 0;
 
@@ -27,6 +22,11 @@ int main(int argc, char* argv[])
     };
     evo.pop = malloc(evo.agent_struct_size * evo.pop_size);
 
+    // used var
+    uint32_t tick = 0;
+
+    MAT_DECLA(selected);
+    my_matrix_create(evo.pop_size / 2, 2, 1, &selected);
     // population creattion (main)
 
     uint32_t dims[] = {2, 3, 2};
@@ -180,7 +180,6 @@ int main(int argc, char* argv[])
             tick = 0;
         }
 #endif
-        my_cell_update(evo.pop, evo.pop_size);
         // show
         sfRenderWindow_clear(window, sfBlack);
         for (uint32_t i = 0; i < evo.pop_size; ++i) {
@@ -188,6 +187,16 @@ int main(int argc, char* argv[])
             my_cell_show(window, cell, ratio);
         }
         sfRenderWindow_display(window);
+
+        if (tick < evo.max_tick_per_gen) {
+            my_cell_update(evo.pop, evo.pop_size);
+            ++tick;
+        } else if (tick == evo.max_tick_per_gen) {
+            for (uint32_t i = 0; i < evo.pop_size; ++i) {
+                void *cell = (void *)((char *)(evo.pop) + i * evo.agent_struct_size);
+                if (my_cell_is_select(cell))
+            }
+        }
 
     }
     sfRenderWindow_destroy(window);
