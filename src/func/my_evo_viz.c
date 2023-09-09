@@ -14,7 +14,7 @@ static void handle_show(my_evo_t *evo, sfRenderWindow *window)
     sfRenderWindow_clear(window, sfBlack);
     for (uint32_t i = 0; i < evo->pop_size; ++i) {
         void *cell = (void *)((char *)(evo->pop) + i * evo->agent_struct_size);
-        my_cell_show(window, cell);
+        my_cell_draw(window, cell);
     }
     sfRenderWindow_display(window);
 }
