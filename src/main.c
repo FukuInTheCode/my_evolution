@@ -87,20 +87,21 @@ int main(int argc, char* argv[])
             for (uint32_t i = 0; i < evo.pop_size; ++i) {
                 void *cell = (void *)((char *)(evo.pop) + i * evo.agent_struct_size);
                 double cell_reward = my_cell_get_reward(cell);
-                if (my_cell_is_select(cell) && i_selected < evo.pop_size / 2) {
+                bool is_selected = my_cell_is_select(cell);
+                if (is_selected && i_selected < evo.pop_size / 2) {
                     my_matrix_set(&selected, i_selected, 0, i);
                     my_matrix_set(&selected, i_selected, 1, cell_reward);
                     ++i_selected;
-                } else {
-                    uint32_t min_reward = my_matrix_mincol(&selected, 1);
-                    if (cell_reward > min_reward && i_selected >= evo.pop_size / 2) {
+                } else if (is_selected) {
+                    double min_reward = my_matrix_mincol(&selected, 1);
+                    if (min_reward < cell_reward) {
                         uint32_t min_i = my_matrix_find_row_index(&selected, 1, min_reward);
+                        my_matrix_set(&unselected, i - i_selected, 0, min_i);
                         my_matrix_set(&selected, min_i, 0, i);
                         my_matrix_set(&selected, min_i, 1, cell_reward);
-                        my_matrix_set(&unselected, i - i_selected, 0, min_i);
-                    } else
-                        my_matrix_set(&unselected, i - i_selected, 0, i);
-                }
+                    }
+                } else
+                    my_matrix_set(&unselected, i - i_selected, 0, i);
             }
             printf("%u\n", i_selected);
             // MAT_PRINT(selected);
