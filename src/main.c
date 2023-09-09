@@ -68,121 +68,7 @@ int main(int argc, char* argv[])
             if (event.type == sfEvtClosed)
                 sfRenderWindow_close(window);
         }
-#if 0
 
-
-        // evolution algo
-        if (tick < max_tick) {
-            // do a tick
-            for (uint32_t i = 0; i < pop_size; ++i) {
-                MAT_DECLA(datb);
-                my_nn_predict(&(pop[i]->brain), &(pop[i]->atb), &datb);
-                datb.arr[0][0] = set(datb.arr[0][0]);
-                datb.arr[1][0] = set(datb.arr[1][0]);
-                MAT_DECLA(new_atb);
-                my_matrix_add(&new_atb, 2, &(pop[i]->atb), &datb);
-                bool can_move = true;
-                if (new_atb.arr[0][0] < 0)
-                    can_move = false;
-                if (new_atb.arr[1][0] < 0)
-                    can_move = false;
-                if (new_atb.arr[0][0] > SIZE)
-                    can_move = false;
-                if (new_atb.arr[1][0] > SIZE)
-                    can_move = false;
-                for (uint32_t j = 0; j < pop_size; ++j) {
-                    if (my_matrix_equals(&(pop[j].atb), &new_atb))
-                        can_move = false;
-                }
-                if (can_move)
-                    my_matrix_copy(&new_atb, &(pop[i]->atb));
-                my_matrix_free(2, &datb, &new_atb);
-            }
-            ++tick;
-        // selection algo
-        } else if (tick == max_tick) {
-            double max_reward = -1.;
-            uint32_t unselected_id[pop_size / 2];
-            uint32_t unselect_i = 0;
-            double total_reward = 0;
-            for (uint32_t i = 0; i < pop_size; ++i) {
-                pop[i]->reward = 1. / (sqrt(pow(pop[i]->atb.arr[0][0] - SIZE / 2., 2) + pow(pop[i]->atb.arr[1][0] - SIZE / 2., 2)) + 1);
-                total_reward += pop[i]->reward;
-                if (max_reward < pop[i]->reward) {
-                    max_reward = pop[i]->reward;
-                    max_reward_id = i;
-                }
-                if (i < pop_size / 2) {
-                    selected_id[i] = i;
-                    selected_reward[i] = pop[i]->reward;
-                    continue;
-                }
-                double min_selected_reward = my_min(selected_reward, pop_size / 2);
-                if (min_selected_reward >= pop[i]->reward) {
-                    unselected_id[unselect_i++] = i;
-                    continue;
-                }
-                uint32_t j;
-                for (j = 0; j < pop_size / 2; ++j) {
-                    if (min_selected_reward == selected_reward[j])
-                        break;
-                }
-                unselected_id[unselect_i++] = selected_id[j];
-                selected_id[j] = i;
-                selected_reward[j] = pop[i]->reward;
-            }
-
-
-            uint32_t n_params = my_nn_get_n_params(&(pop[0].brain));
-            unselect_i = 0;
-            for (uint32_t i = 0; i < pop_size / 2;  i += 2) {
-                uint32_t crosspoint = my_randint(0, n_params);
-                double *parent1 = malloc(sizeof(double) * n_params);
-                my_nn_to_array(&(pop[i]->brain), &parent1);
-                double *parent2 = malloc(sizeof(double) * n_params);
-                my_nn_to_array(&(pop[i + 1].brain), &parent2);
-                double *child1 = malloc(sizeof(double) * n_params);
-                double *child2 = malloc(sizeof(double) * n_params);
-                for (uint32_t j = 0; j < crosspoint; ++j) {
-                    child1[j] = parent1[j];
-                    child2[j] = parent2[j];
-                }
-                for (uint32_t j = crosspoint; j < n_params; ++j) {
-                    child1[j] = parent2[j];
-                    child2[j] = parent1[j];
-                }
-
-                if (my_randfloat(0, 1) < mutation_chance) {
-                    child1[my_randint(0, n_params - 1)] += my_randfloat(-1, 1);
-                    child2[my_randint(0, n_params - 1)] += my_randfloat(-1, 1);
-                }
-
-                my_nn_from_array(&(pop[unselected_id[unselect_i++]].brain), child1);
-                my_nn_from_array(&(pop[unselected_id[unselect_i++]].brain), child2);
-                free(parent1);
-                free(parent2);
-                free(child1);
-                free(child2);
-            }
-            ++tick;
-            ++gen_i;
-            printf("gen %u's avr reward: %lf\n", gen_i, total_reward / pop_size);
-            for (uint32_t i = 0; i < pop_size / 2; ++i)
-                pop[selected_id[i]].color = sfGreen;
-            for (uint32_t i = 0; i < pop_size / 2; ++i)
-                pop[unselected_id[i]].color = sfCyan;
-            pop[max_reward_id].color = sfBlue;
-        // reset
-        } else {
-            usleep(1000000);
-            for (uint32_t i = 0; i < pop_size; ++i){
-                my_matrix_randint(0, SIZE, 1, &(pop[i]->atb));
-                pop[i]->color = sfRed;
-            }
-            pop[max_reward_id].color = sfBlue;
-            tick = 0;
-        }
-#endif
         // show
         sfRenderWindow_clear(window, sfBlack);
         for (uint32_t i = 0; i < evo.pop_size; ++i) {
@@ -191,10 +77,13 @@ int main(int argc, char* argv[])
         }
         sfRenderWindow_display(window);
 
+        // gen algo
+
         if (tick < evo.max_tick_per_gen) {
             my_cell_update(evo.pop, evo.pop_size);
             ++tick;
         } else if (tick == evo.max_tick_per_gen) {
+            // selection
             for (uint32_t i = 0; i < evo.pop_size; ++i) {
                 void *cell = (void *)((char *)(evo.pop) + i * evo.agent_struct_size);
                 if (my_cell_is_select(cell) && i_selected < evo.pop_size / 2) {
@@ -210,6 +99,7 @@ int main(int argc, char* argv[])
             MAT_PRINT(unselected);
             ++tick;
         } else {
+            // duplica
             for (uint32_t i = 0; i < evo.pop_size - i_selected; ++i) {
                 my_cell_t *cell_child = (my_cell_t *)((char *)evo.pop + unselected.arr[i][0] * evo.agent_struct_size);
                 my_cell_t *cell_parent = (my_cell_t *)((char *)evo.pop + selected.arr[i % i_selected][0] * evo.agent_struct_size);
@@ -219,7 +109,15 @@ int main(int argc, char* argv[])
                     if (my_randfloat(0, 1) <= evo.mutation_chance)
                         arr[j] += my_randfloat(-1 * evo.mutation_range, evo.mutation_range);
                 }
+                my_nn_from_array(&(cell_child->brain), arr);
+                free(arr);
+                my_matrix_randint(0, SIZE, 2, &(cell_child->atb), &(cell_parent->atb));
+                cell_parent->color = sfBlue;
+                cell_child->color = sfRed;
             }
+            // reset
+            i_selected = 0;
+            usleep(1000);
         }
 
     }
