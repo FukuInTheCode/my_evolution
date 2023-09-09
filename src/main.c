@@ -27,6 +27,8 @@ int main(int argc, char* argv[])
     uint32_t i_selected = 0;
     MAT_DECLA(selected);
     my_matrix_create(evo.pop_size / 2, 2, 1, &selected);
+    MAT_DECLA(unselected);
+    my_matrix_create(evo.pop_size, 1, 1, &unselected);
     // population creattion (main)
 
     uint32_t dims[] = {2, 3, 2};
@@ -193,18 +195,23 @@ int main(int argc, char* argv[])
             ++tick;
         } else if (tick == evo.max_tick_per_gen) {
             for (uint32_t i = 0; i < evo.pop_size; ++i) {
-                if (i_selected >= evo.pop_size / 2)
-                    break;
                 void *cell = (void *)((char *)(evo.pop) + i * evo.agent_struct_size);
-                if (my_cell_is_select(cell)) {
+                if (my_cell_is_select(cell) && i_selected < evo.pop_size / 2) {
                     my_matrix_set(&selected, i_selected, 0, i);
                     my_matrix_set(&selected, i_selected, 1, my_cell_get_reward(cell));
                     ++i_selected;
+                } else {
+                    my_matrix_set(&unselected, i - i_selected, 0, i);
                 }
             }
             printf("%u\n", i_selected);
             MAT_PRINT(selected);
+            MAT_PRINT(unselected);
             ++tick;
+        } else {
+            for (uint32_t i = 0; i < i_selected; ++i) {
+
+            }
         }
 
     }
@@ -221,6 +228,7 @@ int main(int argc, char* argv[])
     free(evo.pop);
 
     MAT_FREE(selected);
+    MAT_FREE(unselected);
 
     return 0;
 }
