@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 
     // used var
     uint32_t tick = 0;
-
+    uint32_t i_selected = 0;
     MAT_DECLA(selected);
     my_matrix_create(evo.pop_size / 2, 2, 1, &selected);
     // population creattion (main)
@@ -193,8 +193,14 @@ int main(int argc, char* argv[])
             ++tick;
         } else if (tick == evo.max_tick_per_gen) {
             for (uint32_t i = 0; i < evo.pop_size; ++i) {
+                if (i_selected >= evo.pop_size / 2)
+                    break;
                 void *cell = (void *)((char *)(evo.pop) + i * evo.agent_struct_size);
-                if (my_cell_is_select(cell))
+                if (my_cell_is_select(cell)) {
+                    my_matrix_set(&selected, i_selected, 0, i);
+                    my_matrix_set(&selected, i_selected, 1, my_cell_get_reward(cell));
+                    ++i_selected;
+                }
             }
         }
 
