@@ -14,6 +14,7 @@ typedef struct {
     void *pop;
     uint32_t max_tick_per_gen;
     double mutation_chance;
+    double mutation_range;
     size_t agent_struct_size;
     selection_func is_selected;
     do_update update;
