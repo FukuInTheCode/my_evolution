@@ -9,6 +9,16 @@ static void handle_event(sfRenderWindow *window)
     }
 }
 
+static void handle_show(my_evo_t *evo, sfRenderWindow *window)
+{
+    sfRenderWindow_clear(window, sfBlack);
+    for (uint32_t i = 0; i < evo->pop_size; ++i) {
+        void *cell = (void *)((char *)(evo->pop) + i * evo->agent_struct_size);
+        my_cell_show(window, cell, ratio);
+    }
+    sfRenderWindow_display(window);
+}
+
 void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
 {
     sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo", sfDefaultStyle, NULL);
@@ -28,12 +38,6 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
     while (sfRenderWindow_isOpen(window)) {
 
         // show
-        sfRenderWindow_clear(window, sfBlack);
-        for (uint32_t i = 0; i < evo->pop_size; ++i) {
-            void *cell = (void *)((char *)(evo->pop) + i * evo->agent_struct_size);
-            my_cell_show(window, cell, ratio);
-        }
-        sfRenderWindow_display(window);
 
         // gen algo
 
