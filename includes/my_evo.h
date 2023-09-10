@@ -30,5 +30,6 @@ uint32_t my_evo_do_selection(my_evo_t *evo, my_matrix_t *selected,\
                                             my_matrix_t *unselected);
 void my_evo_duplica(my_evo_t *evo, my_matrix_t *selected, \
                                         my_matrix_t *unselected, uint32_t i_selected);
+void my_evo_create(my_evo_t *evo);
 
 #endif
