@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
         .get_agent_array = my_cell_get_array,
         .reset_agent = my_cell_reset,
         .agent_from_array = my_cell_from_array,
-        .create_agent = my_cell_create
+        .create_agent = my_cell_create,
         .free_agent = my_cell_free
     };
 
