@@ -8,11 +8,11 @@ double set(double x)
 int main(int argc, char* argv[])
 {
 
-    srand(69);
+    srand(time(0));
 
     my_evo_t evo = {
         .pop_size = 100,
-        .max_tick_per_gen = SIZE / 3. * 2.,
+        .max_tick_per_gen = SIZE,
         .mutation_chance = 0.3,
         .mutation_range = 1.,
         .agent_struct_size = sizeof(my_cell_t),
