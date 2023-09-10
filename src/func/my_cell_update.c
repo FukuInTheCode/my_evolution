@@ -40,7 +40,7 @@ uint32_t my_cell_update(void *cell_ptr, void *pop, uint32_t pop_size)
     my_cell_t *cell = (my_cell_t *)cell_ptr;
     MAT_DECLA(new_atb);
     use_brain(cell, &new_atb);
-    check_new_atb(pop_size, pop, &new_atb)
+    check_new_atb(&(cell->atb), pop_size, pop, &new_atb)
     my_matrix_copy(&new_atb, &(cell->atb));
     MAT_FREE(new_atb);
     return pop_size;
