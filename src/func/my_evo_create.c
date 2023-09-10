@@ -3,10 +3,7 @@
 void my_evo_create(my_evo_t *evo)
 {
     evo.pop = calloc(evo.pop_size, evo.agent_struct_size);
-    if (evo.pop == NULL) {
-        fprintf(stderr, "Alloc failed!");
-        exit(1);
-    }
+    check_alloc(evo->pop);
 
     uint32_t dims[] = {2, 3, 2};
     for (size_t i = 0; i < evo.pop_size; ++i) {
