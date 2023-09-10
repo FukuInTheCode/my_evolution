@@ -6,7 +6,7 @@ void my_evo_create(my_evo_t *evo)
     check_alloc(evo->pop);
 
     for (size_t i = 0; i < evo.pop_size; ++i) {
-        my_cell_t *cell = (my_cell_t *)((char *)(evo.pop) + evo.agent_struct_size * i);
+        void *cell = (void *)((char *)(evo.pop) + evo.agent_struct_size * i);
 
     }
 }
