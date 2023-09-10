@@ -7,7 +7,7 @@
 typedef void (*draw_func)(sfRenderWindow *, void *);
 typedef void (*update_func)(void *, void *, uint32_t);
 typedef bool (*selection_func)(void *, void *, uint32_t);
-typedef double (*reward_func)(void *);
+typedef double (*reward_func)(void *, void *, uint32_t);
 typedef uint32_t (*get_array_func)(void *, double **);
 typedef void (*reset_func)(void *, bool);
 typedef void (*from_array_func)(void *, double *);
