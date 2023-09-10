@@ -1,6 +1,6 @@
 #include "../../includes/my.h"
 
-static draw_rectangle(sfRenderWindow *window, sfVector2f ratio)
+static void draw_rectangle(sfRenderWindow *window, sfVector2f ratio)
 {
     sfRectangleShape *selection_zone = sfRectangleShape_create();
     sfRectangleShape_setOutlineColor(selection_zone, sfWhite);
