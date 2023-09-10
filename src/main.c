@@ -24,6 +24,8 @@ int main(int argc, char* argv[])
 
     // population creattion (main)
 
+    my_evo_create(&evo);
+
     sfVideoMode mode = {1500, 1500, 32};
     my_evo_viz(&evo, mode);
 
