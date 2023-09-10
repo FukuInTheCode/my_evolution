@@ -15,7 +15,7 @@ typedef void (*create_func)(void *);
 typedef void (*free_func)(void *);
 
 typedef struct {
-    size_t pop_size;
+    uint32_t pop_size;
     void *pop;
     uint32_t max_tick_per_gen;
     double mutation_chance;
