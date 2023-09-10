@@ -6,7 +6,7 @@ uint32_t my_evo_do_selection(my_evo_t *evo, my_matrix_t *selected,\
     uint32_t i_selected = 0;
     for (uint32_t i = 0; i < evo->pop_size; ++i) {
         void *cell = (void *)((char *)(evo->pop) + i * evo->agent_struct_size);
-        double cell_reward = my_cell_get_reward(cell);
+        double cell_reward = evo->get_agent_reward(cell);
         bool is_selected = evo->agent_is_select(cell);
         if (is_selected && i_selected < evo->pop_size / 2) {
             my_matrix_set(selected, i_selected, 0, i);
