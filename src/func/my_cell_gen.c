@@ -33,15 +33,12 @@ static bool can_move(uint32_t pop_size, void *pop, my_matrix_t *new_atb)
 }
 
 
-void my_cell_update(void *pop, uint32_t pop_size)
+void my_cell_update(void *cell_ptr, void *pop, uint32_t pop_size)
 {
-    for (uint32_t i = 0; i < pop_size; ++i) {
-        my_cell_t *cell_ptr = (my_cell_t *)((char *)pop + i *\
-                                                sizeof(my_cell_t));
-        MAT_DECLA(new_atb);
-        use_brain(cell_ptr, &new_atb);
-        if (can_move(pop_size, pop, &new_atb))
-            my_matrix_copy(&new_atb, &(cell_ptr->atb));
-        MAT_FREE(new_atb);
-    }
+    my_cell_t *cell_ptr = (my_cell_t *)cell_ptr;
+    MAT_DECLA(new_atb);
+    use_brain(cell_ptr, &new_atb);
+    if (can_move(pop_size, pop, &new_atb))
+        my_matrix_copy(&new_atb, &(cell_ptr->atb));
+    MAT_FREE(new_atb);
 }
