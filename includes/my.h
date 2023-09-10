@@ -31,7 +31,7 @@ typedef struct {
 void my_cell_draw(sfRenderWindow *window, void *cell);
 void my_cell_update(void *cell_ptr, void *pop, uint32_t pop_size);
 bool my_cell_is_select(void *cell_ptr, void *pop, uint32_t pop_size);
-double my_cell_get_reward(void *cell_ptr);
+double my_cell_get_reward(void *cell_ptr, void *pop, uint32_t pop_size);
 uint32_t my_cell_get_array(void *cell_ptr, double **arr);
 void my_cell_reset(void *cell_ptr, bool is_selected);
 void my_cell_from_array(void *cell_ptr, double *arr);
