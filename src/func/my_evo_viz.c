@@ -23,7 +23,7 @@ static uint32_t do_gen(my_evo_t *evo, my_matrix_t **s_matrices,\
                                 uint32_t tick, uint32_t i_selected)
 {
     if (tick < evo->max_tick_per_gen) {
-        for (uint32_t i = 0, i < evo->evo_size; ++i) {
+        for (uint32_t i = 0; i < evo->evo_size; ++i) {
             void *cell = (void *)((char *)evo->pop + i *\
                                     evo->agent_struct_size);
             evo->update_agent(cell, evo->pop, evo->pop_size);
