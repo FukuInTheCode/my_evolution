@@ -35,3 +35,4 @@ double my_cell_get_reward(void *cell_ptr);
 uint32_t my_cell_get_array(void *cell_ptr, double **arr);
 void my_cell_reset(void *cell_ptr, bool is_selected);
 void my_cell_from_array(void *cell_ptr, double *arr);
+void my_cell_create(void *cell_ptr);
