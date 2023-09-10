@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
         .agent_struct_size = sizeof(my_cell_t),
         .do_per_n_gen = 1,
         .draw_agent = my_cell_draw,
-        .update_agents = my_cell_update,
+        .update_agent = my_cell_update,
         .agent_is_select = my_cell_is_select,
         .get_agent_reward = my_cell_get_reward,
         .get_agent_array = my_cell_get_array,

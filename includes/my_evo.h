@@ -23,7 +23,7 @@ typedef struct {
     size_t agent_struct_size;
     uint32_t do_per_n_gen;
     draw_func draw_agent;
-    update_func update_agents;
+    update_func update_agent;
     selection_func agent_is_select;
     reward_func get_agent_reward;
     get_array_func get_agent_array;
