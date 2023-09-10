@@ -24,7 +24,8 @@ int main(int argc, char* argv[])
         .agent_is_select = my_cell_is_select,
         .get_agent_reward = my_cell_get_reward,
         .get_agent_array = my_cell_get_array,
-        .reset_agent = my_cell_reset
+        .reset_agent = my_cell_reset,
+        .agent_from_array = my_cell_from_array
     };
     // used var
 
