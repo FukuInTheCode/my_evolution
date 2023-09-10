@@ -29,8 +29,6 @@ int main(int argc, char* argv[])
     sfVideoMode mode = {1500, 1500, 32};
     my_evo_viz(&evo, mode);
 
-
-
     for (uint32_t i = 0; i < evo.pop_size; ++i) {
         my_cell_t *cell = (my_cell_t *)((char *)evo.pop + evo.agent_struct_size * i);
 

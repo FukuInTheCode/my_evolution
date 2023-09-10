@@ -1,3 +1,4 @@
+#define MATRIX_CHECK_ALLOC
 #include "../../includes/my.h"
 
 void my_evo_create(my_evo_t *evo)
