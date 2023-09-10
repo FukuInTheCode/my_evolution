@@ -14,7 +14,7 @@ static void use_brain(my_cell_t *cell, my_matrix_t *new_atb)
     MAT_FREE(datb);
 }
 
-static bool check_new_atb(uint32_t pop_size, void *pop, my_matrix_t *new_atb)
+static void check_new_atb(uint32_t pop_size, void *pop, my_matrix_t *new_atb)
 {
     if (new_atb->arr[0][0] < 0)
         return false;
