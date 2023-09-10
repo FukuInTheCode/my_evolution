@@ -8,6 +8,7 @@ typedef void (*draw_func)(sfRenderWindow *, void *);
 typedef void (*update_func)(void *, uint32_t);
 typedef bool (*selection_func)(void *);
 typedef double (*reward_func)(void *);
+typedef void (*get_array_func)(void *, double **);
 
 typedef struct {
     size_t pop_size;
