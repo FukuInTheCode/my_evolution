@@ -14,7 +14,7 @@ static void use_brain(my_cell_t *cell, my_matrix_t *new_atb)
     MAT_FREE(datb);
 }
 
-static bool can_move(uint32_t pop_size, void *pop, my_matrix_t *new_atb)
+static bool check_new_atb(uint32_t pop_size, void *pop, my_matrix_t *new_atb)
 {
     if (new_atb->arr[0][0] < 0)
         return false;
@@ -38,8 +38,8 @@ uint32_t my_cell_update(void *cell_ptr, void *pop, uint32_t pop_size)
     my_cell_t *cell = (my_cell_t *)cell_ptr;
     MAT_DECLA(new_atb);
     use_brain(cell, &new_atb);
-    if (can_move(pop_size, pop, &new_atb))
-        my_matrix_copy(&new_atb, &(cell->atb));
+    check_new_atb(pop_size, pop, &new_atb)
+    my_matrix_copy(&new_atb, &(cell->atb));
     MAT_FREE(new_atb);
     return pop_size;
 }
