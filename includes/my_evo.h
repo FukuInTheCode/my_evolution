@@ -9,6 +9,7 @@ typedef void (*update_func)(void *, uint32_t);
 typedef bool (*selection_func)(void *);
 typedef double (*reward_func)(void *);
 typedef uint32_t (*get_array_func)(void *, double **);
+typedef void (*reset_func)(void *, bool);
 
 typedef struct {
     size_t pop_size;
