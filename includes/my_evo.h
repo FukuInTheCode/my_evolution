@@ -28,6 +28,7 @@ typedef struct {
     get_array_func get_agent_array;
     reset_func reset_agent;
     from_array_func agent_from_array;
+    create_func create_agent;
 } my_evo_t;
 
 void my_evo_viz(my_evo_t *evo, sfVideoMode mode);
