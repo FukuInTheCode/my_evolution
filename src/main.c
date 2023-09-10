@@ -33,6 +33,8 @@ int main(int argc, char* argv[])
     sfVideoMode mode = {1500, 1500, 32};
     my_evo_viz(&evo, mode);
 
+    my_evo_free(&evo);
+
 
     return 0;
 }
