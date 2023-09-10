@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
         .mutation_range = 1.,
         .agent_struct_size = sizeof(my_cell_t),
         .do_per_n_gen = 1,
-        .agent_draw = my_cell_draw
+        .draw_agent = my_cell_draw
     };
     // used var
 

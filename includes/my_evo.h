@@ -5,6 +5,7 @@
 #include "SFML/Graphics.h"
 
 typedef void (*draw_func)(sfRenderWindow *, void *);
+typedef void (*update_func)(void *, uint32_t);
 
 typedef struct {
     size_t pop_size;
@@ -14,7 +15,8 @@ typedef struct {
     double mutation_range;
     size_t agent_struct_size;
     uint32_t do_per_n_gen;
-    draw_func agent_draw;
+    draw_func draw_agent;
+    update_func update_agents;
 } my_evo_t;
 
 void my_evo_viz(my_evo_t *evo, sfVideoMode mode);
