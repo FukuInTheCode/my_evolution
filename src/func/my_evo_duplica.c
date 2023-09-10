@@ -17,7 +17,7 @@ void my_evo_duplica(my_evo_t *evo, my_matrix_t *selected, \
                         (int)(unselected->arr[i][0]) * evo->agent_struct_size);
         evo->agent_from_array(cell_child, arr);
         free(arr);
-        evo->reset_agent(cell_parent, true);
-        evo->reset_agent(cell_child, false);
+        evo->reset_agent(cell_parent, true, evo->pop, evo_pop_size);
+        evo->reset_agent(cell_child, false, evo->pop, evo_pop_size);
     }
 }
