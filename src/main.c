@@ -10,8 +10,6 @@ int main(int argc, char* argv[])
 
     srand(69);
 
-    // my_evo_t
-
     my_evo_t evo = {
         .pop_size = 100,
         .max_tick_per_gen = SIZE / 3. * 2.,
@@ -28,23 +26,12 @@ int main(int argc, char* argv[])
         .agent_from_array = my_cell_from_array,
         .create_agent = my_cell_create
     };
-    // used var
-
-    // population creattion (main)
 
     my_evo_create(&evo);
 
     sfVideoMode mode = {1500, 1500, 32};
     my_evo_viz(&evo, mode);
 
-    for (uint32_t i = 0; i < evo.pop_size; ++i) {
-        my_cell_t *cell = (my_cell_t *)((char *)evo.pop + evo.agent_struct_size * i);
-
-        my_nn_free(&(cell->brain));
-        MAT_FREE((cell->atb));
-    }
-
-    free(evo.pop);
 
     return 0;
 }
