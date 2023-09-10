@@ -24,6 +24,7 @@ typedef struct {
     selection_func agent_is_select;
     reward_func get_agent_reward;
     get_array_func get_agent_array;
+    reset_func reset_agent;
 } my_evo_t;
 
 void my_evo_viz(my_evo_t *evo, sfVideoMode mode);
