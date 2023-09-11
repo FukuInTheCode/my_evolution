@@ -1,7 +1,7 @@
 #ifndef MY_EVO_H
 #define MY_EVO_H
 
-#include "my_neuralnetwork.h"
+#include "my_matrix.h"
 #include "SFML/Graphics.h"
 
 typedef void (*draw_func)(sfRenderWindow *, void *, void *);
