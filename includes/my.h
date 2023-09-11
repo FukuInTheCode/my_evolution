@@ -38,5 +38,3 @@ void my_cell_reset(void *cell_ptr, bool is_selected,\
 void my_cell_from_array(void *cell_ptr, double *arr);
 void my_cell_create(void *cell_ptr);
 void my_cell_free(void *cell_ptr);
-bool my_cell_is_select_2(void *cell_ptr, void *pop, uint32_t pop_size);
-double my_cell_get_reward_2(void *cell_ptr, void *pop, uint32_t pop_size);
