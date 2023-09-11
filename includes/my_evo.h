@@ -23,6 +23,7 @@ typedef struct {
     double mutation_range;
     size_t agent_struct_size;
     uint32_t gen_skip;
+    void *params;
     draw_func draw_agent;
     update_func update_agent;
     selection_func agent_is_select;
