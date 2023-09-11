@@ -32,7 +32,7 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
     while (sfRenderWindow_isOpen(window)) {
         handle_event(window);
         handle_show(evo, window);
-        i_selected = do_gen(evo, &s_matrices, tick, i_selected);
+        i_selected = my_evo_algo(evo, &s_matrices, tick, i_selected);
         tick = (tick + 1) % (evo->max_tick_per_gen + 2);
     }
     sfRenderWindow_destroy(window);
