@@ -1,6 +1,6 @@
 NAME       = my_evolution
 
-CFLAGS     = -W -Wall -Wextra
+CFLAGS     = -W -Wall -Wextra -Wno-unused-parameter
 
 CSFML	   = -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window
 
