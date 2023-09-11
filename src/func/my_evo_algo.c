@@ -25,5 +25,5 @@ static uint32_t do_gen(my_evo_t *evo, my_matrix_t **s_matrices,\
 uint32_t my_evo_algo(my_evo_t *evo, my_matrix_t **s_matrices,\
                             uint32_t tick, uint32_t i_selected)
 {
-    do_gen(evo, s_matrices, tick, i_selected);
+    return do_gen(evo, s_matrices, tick, i_selected);
 }
