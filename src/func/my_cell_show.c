@@ -17,7 +17,7 @@ static void draw_rectangle(sfRenderWindow *window, sfVector2f ratio)
     sfRenderWindow_drawRectangleShape(window, selection_zone, NULL);
 }
 
-void my_cell_draw(sfRenderWindow *window, void *cell)
+void my_cell_draw(sfRenderWindow *window, void *cell, void *params)
 {
     sfVector2u window_size = sfRenderWindow_getSize(window);
     sfVector2f ratio = {
