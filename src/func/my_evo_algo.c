@@ -3,6 +3,7 @@
 static uint32_t do_gen(my_evo_t *evo, my_matrix_t **s_matrices,\
                                 uint32_t tick, uint32_t i_selected)
 {
+    printf("%u\n", tick);
     if (tick < evo->max_tick_per_gen) {
         for (uint32_t i = 0; i < evo->pop_size; ++i) {
             void *cell = (void *)((char *)evo->pop + i *\
@@ -27,9 +28,10 @@ uint32_t my_evo_algo(my_evo_t *evo, my_matrix_t **s_matrices,\
                             uint32_t tick, uint32_t i_selected)
 {
     if (tick == 0) {
-        for (uint32_t i = 0; i < evo->gen_skip * evo->max_tick_per_gen; ++i) {
+        for (uint32_t i = 0; i < evo->gen_skip * (evo->max_tick_per_gen + 2); ++i) {
+            printf("%u\n", i);
             uint32_t i_sel_tmp = do_gen(evo, s_matrices, i\
-                                % evo->max_tick_per_gen, i_sel_tmp);
+                                % (evo->max_tick_per_gen + 2), i_sel_tmp);
         }
     }
     return do_gen(evo, s_matrices, tick, i_selected);
