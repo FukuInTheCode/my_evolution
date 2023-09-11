@@ -17,7 +17,7 @@
 	  {
 		"label": "run",
 		"type": "shell",
-		"command": "Start-Process powershell -ArgumentList './out/${input:my_name}.exe ${input:my_args}; Write-Host; pause'; Measure-Command { ./out/${input:my_name}.exe ${input:my_args} } | ForEach-Object -Process { Write-Host Running Time: $_.TotalSeconds s}",
+		"command": "Start-Process powershell -ArgumentList './out/${input:my_name}.exe ${input:my_args}; Write-Host; pause'",
 		"group": {
 		  "kind": "build",
 		  "isDefault": true
