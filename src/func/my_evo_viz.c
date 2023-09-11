@@ -19,7 +19,6 @@ static void handle_show(my_evo_t *evo, sfRenderWindow *window)
     sfRenderWindow_display(window);
 }
 
-
 void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
 {
     sfRenderWindow *window = sfRenderWindow_create(mode, "my_evo",\
