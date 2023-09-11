@@ -36,4 +36,4 @@ uint32_t my_cell_get_array(void *cell_ptr, double **arr, void *params);
 void my_cell_reset(void *cell_ptr, void *pop, uint32_t pop_size, void *params);
 void my_cell_from_array(void *cell_ptr, double *arr, void *params);
 void my_cell_create(void *cell_ptr, void *params);
-void my_cell_free(void *cell_ptr);
+void my_cell_free(void *cell_ptr, void *params);
