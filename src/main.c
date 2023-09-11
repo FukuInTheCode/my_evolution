@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
         .mutation_range = 1.,
         .agent_struct_size = sizeof(my_cell_t),
         .gen_skip = 0,
-        .selected_size = 100 / 2,
+        .selected_size = 30,
         .draw_agent = my_cell_draw,
         .update_agent = my_cell_update,
         .agent_is_select = my_cell_is_select,
