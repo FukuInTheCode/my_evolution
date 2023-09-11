@@ -24,7 +24,8 @@ int main(int argc, char* argv[])
         .reset_agent = my_cell_reset,
         .agent_from_array = my_cell_from_array,
         .create_agent = my_cell_create,
-        .free_agent = my_cell_free
+        .free_agent = my_cell_free,
+        .params = NULL
     };
     my_evo_create(&evo);
     sfVideoMode mode = {1500, 1500, 32};
