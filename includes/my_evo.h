@@ -10,7 +10,7 @@ typedef bool (*selection_func)(void *, void *, uint32_t, void *);
 typedef double (*reward_func)(void *, void *, uint32_t, void *);
 typedef uint32_t (*get_array_func)(void *, double **, void *);
 typedef void (*reset_func)(void *, void *, uint32_t, void *);
-typedef void (*from_array_func)(void *, double *);
+typedef void (*from_array_func)(void *, double *, void *);
 typedef void (*create_func)(void *);
 typedef void (*free_func)(void *);
 
