@@ -18,6 +18,7 @@ static uint32_t do_gen(my_evo_t *evo, my_matrix_t **s_matrices,\
         i_selected = 0;
         my_matrix_setall(&((*s_matrices)[1]), 0);
         my_matrix_setall(&((*s_matrices)[0]), 0);
+        printf("One more!\n");
     }
     return i_selected;
 }
@@ -25,5 +26,9 @@ static uint32_t do_gen(my_evo_t *evo, my_matrix_t **s_matrices,\
 uint32_t my_evo_algo(my_evo_t *evo, my_matrix_t **s_matrices,\
                             uint32_t tick, uint32_t i_selected)
 {
+    if (tick == 0) {
+        for (uint32_t i = 0; i < evo->skip_gen * evo->max_tick_per_gen; ++i)
+            uint32_t i_sel_tmp = do_gen(evo, s_matrices, i, i_sel_tmp);
+    }
     return do_gen(evo, s_matrices, tick, i_selected);
 }
