@@ -43,5 +43,7 @@ void my_evo_duplica(my_evo_t *evo, my_matrix_t *selected, \
                                         my_matrix_t *unselected, uint32_t i_selected);
 void my_evo_create(my_evo_t *evo);
 void my_evo_free(my_evo_t *evo);
+uint32_t my_evo_algo(my_evo_t *evo, my_matrix_t **s_matrices,\
+                            uint32_t tick, uint32_t i_selected);
 
 #endif
