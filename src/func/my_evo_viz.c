@@ -49,7 +49,7 @@ void my_evo_viz(my_evo_t *evo, sfVideoMode mode)
     uint32_t tick = 0;
     my_matrix_t *s_matrices;
     my_matrix_create_array(&s_matrices, "S", 2,\
-                    evo->pop_size / 2, 2, evo->pop_size, 1);
+                    evo->selected_size, 2, evo->pop_size, 1);
     uint32_t i_selected = 0;
     while (sfRenderWindow_isOpen(window)) {
         handle_event(window);
