@@ -10,11 +10,11 @@ int main(int argc, char* argv[])
     srand(time(0));
     my_evo_t evo = {
         .pop_size = 100,
-        .max_tick_per_gen = 100,
+        .max_tick_per_gen = SIZE,
         .mutation_chance = 0.3,
         .mutation_range = 1.,
         .agent_struct_size = sizeof(my_cell_t),
-        .gen_skip = 0,
+        .gen_skip = 100,
         .selected_size = 30,
         .draw_agent = my_cell_draw,
         .update_agent = my_cell_update,

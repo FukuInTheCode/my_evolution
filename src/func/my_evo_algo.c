@@ -18,7 +18,6 @@ static uint32_t do_gen(my_evo_t *evo, my_matrix_t **s_matrices,\
         i_selected = 0;
         my_matrix_setall(&((*s_matrices)[1]), 0);
         my_matrix_setall(&((*s_matrices)[0]), 0);
-        printf("One more!\n");
     }
     return i_selected;
 }
