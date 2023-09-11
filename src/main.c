@@ -7,9 +7,7 @@ double set(double x)
 
 int main(int argc, char* argv[])
 {
-
     srand(time(0));
-
     my_evo_t evo = {
         .pop_size = 100,
         .max_tick_per_gen = SIZE,
@@ -27,14 +25,9 @@ int main(int argc, char* argv[])
         .create_agent = my_cell_create,
         .free_agent = my_cell_free
     };
-
     my_evo_create(&evo);
-
     sfVideoMode mode = {1500, 1500, 32};
     my_evo_viz(&evo, mode);
-
     my_evo_free(&evo);
-
-
     return 0;
 }
