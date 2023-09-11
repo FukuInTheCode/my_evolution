@@ -30,8 +30,8 @@ uint32_t my_evo_algo(my_evo_t *evo, my_matrix_t **s_matrices,\
     if (tick == 0) {
         for (uint32_t i = 0; i < evo->gen_skip * (evo->max_tick_per_gen + 2); ++i) {
             printf("%u\n", i);
-            uint32_t i_sel_tmp = do_gen(evo, s_matrices, i\
-                                % (evo->max_tick_per_gen + 2), i_sel_tmp);
+            uint32_t i_sel_tmp = do_gen(evo, s_matrices, i %\
+                                    (evo->max_tick_per_gen + 2), i_sel_tmp);
         }
     }
     return do_gen(evo, s_matrices, tick, i_selected);
