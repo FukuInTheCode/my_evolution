@@ -35,7 +35,7 @@ static void check_new_atb(my_matrix_t *old_atb, uint32_t pop_size,\
 }
 
 
-uint32_t my_cell_update(void *cell_ptr, void *pop, uint32_t pop_sizev, void *)
+uint32_t my_cell_update(void *cell_ptr, void *pop, uint32_t pop_size, void *)
 {
     my_cell_t *cell = (my_cell_t *)cell_ptr;
     MAT_DECLA(new_atb);
