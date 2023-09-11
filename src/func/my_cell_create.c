@@ -3,9 +3,9 @@
 void my_cell_create(void *cell_ptr)
 {
     my_cell_t *cell = (my_cell_t *)cell_ptr;
-    uint32_t dims[] = {2, 3, 3, 3, 2};
+    uint32_t dims[] = {2, 3, 2};
     cell->brain.dims = dims;
-    cell->brain.size = 5;
+    cell->brain.size = 3;
     cell->brain.name = "cell";
     cell->brain.acti_type = base_type;
     cell->brain.funcs.af = my_nn_sin;
