@@ -26,6 +26,7 @@ typedef struct {
     uint32_t gen_skip;
     void *params;
     draw_func draw_agent;
+    draw_bg_func draw_bg;
     update_func update_agent;
     selection_func agent_is_select;
     reward_func get_agent_reward;
