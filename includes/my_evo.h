@@ -5,6 +5,7 @@
 #include "SFML/Graphics.h"
 
 typedef void (*draw_func)(sfRenderWindow *, void *, void *);
+typedef void (*draw_bg_func)(sfRenderWindow *, void *);
 typedef uint32_t (*update_func)(void *, void *, uint32_t, void *);
 typedef bool (*selection_func)(void *, void *, uint32_t, void *);
 typedef double (*reward_func)(void *, void *, uint32_t, void *);
