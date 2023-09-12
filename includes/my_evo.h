@@ -14,6 +14,7 @@ typedef void (*reset_func)(void *, void *, uint32_t, void *);
 typedef void (*from_array_func)(void *, double *, void *);
 typedef void (*create_func)(void *, void *);
 typedef void (*free_func)(void *, void *);
+typedef void (*params_func)(void *, uint32_t, void *);
 
 typedef struct {
     uint32_t pop_size;
