@@ -11,7 +11,7 @@ static void handle_event(sfRenderWindow *window)
 
 static void handle_show(my_evo_t *evo, sfRenderWindow *window)
 {
-    sfRenderWindow_clear(window, sfBlack);
+    evo->draw_bg(window, evo->params);
     for (uint32_t i = 0; i < evo->pop_size; ++i) {
         void *cell = (void *)((char *)(evo->pop) + i * evo->agent_struct_size);
         evo->draw_agent(window, cell, evo->params);
